@@ -1,7 +1,7 @@
 body
 {
     background: url("../images/lined_paper.png");
-
+    color: #000000;
 }
 
 .header
@@ -47,10 +47,13 @@ a:active {
 {
   margin-top: 5px;
   margin-bottom: 50px;
+  color:#000000;
 }
+
 .content
 {
-  color: #ffffff;
+
+  color: #000000;
 }
 
 .footer
@@ -68,4 +71,9 @@ a:active {
 h1, h2, h3, h4, h5, h6
 {
   color: #d0661c;
+}
+
+table, tr, td
+{
+  color: #000000;
 }
