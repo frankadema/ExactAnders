@@ -23,19 +23,12 @@
     <!--content-->
       <div class="container">
         <?php
-        include ("include/menu.inc");
-
-        if(empty($_SESSION['administrator']))
-        {
-          echo "Er iets fout gegaan, ga terug naar het begin scherm!";
-        }
-        else
-        {
+          include ("include/menu.inc");
         ?>
         <div class="row content">
           <div class="col-lg-12 center">
             <?php
-            echo"<h1>Vak toevoegen</h1>";
+            echo"<h1>Vakken</h1>";
             $form_verstuurd = 0;
             if(isset($_POST['submit']))
             {
@@ -178,8 +171,7 @@ else
         }
         echo "</select>";
 
-        echo "<br/>";
-        /*echo"<select name='docent_id_2'>";
+        echo "<br/><select name='docent_id_2'>";
         echo "<option value=''>Extra docent</option>";
           // output data of each row
           while($row2 = $result->fetch_assoc())
@@ -188,7 +180,7 @@ else
               <option value='<?php echo $row2['docent_id']?>'> <?php echo $row2['firstname']?> &nbsp;<?php echo $row2['lastname']?></option>;
           <?php
           }
-          echo "</select>";*/
+          echo "</select>";
           ?>
 
 
@@ -213,9 +205,6 @@ else
           ?>
           </div>
         </div>
-        <?php
-        }
-        ?>
       </div>
       <!--end content-->
       <?php

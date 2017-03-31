@@ -23,7 +23,14 @@
     <!--content-->
       <div class="container">
         <?php
-          include ("include/menu.inc");
+        include ("include/menu.inc");
+
+        if(empty($_SESSION['administrator']))
+        {
+          echo "Er iets fout gegaan, ga terug naar het begin scherm!";
+        }
+        else
+        {
         ?>
         <div class="row content">
           <div class="col-lg-12 center">
@@ -133,6 +140,9 @@
           ?>
           </div>
         </div>
+        <?php
+      }
+        ?>
       </div>
       <!--end content-->
       <?php

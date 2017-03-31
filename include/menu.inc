@@ -24,19 +24,7 @@
   if(!empty($_SESSION['docent']))
   {
   ?>
-  <li><a href="#">Voortgangendocent</a></li>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opdrachten<span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li><a href="#">Vak 1</a></li>
-      <li><a href="#">Vak 1</a></li>
-      <li><a href="#">Vak 2</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Beoordelen vak</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Beoordelen docent</a></li>
-    </ul>
-  </li>
+  <li><a href="vakken_docent.php">vakken</a></li>
   <?php
   }
   if(!empty($_SESSION['leerling']))
