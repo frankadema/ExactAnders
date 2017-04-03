@@ -31,19 +31,16 @@
         </div>
         <div class="row">
           <div class="col-lg-6">
-            <h1>Algemene informatie</h1>
+            <h1>Exact Anders</h1>
           <div class="col-lg-12">
-Algemene Het Hondsrug College is een protestants- christelijke scholengemeenschap in Emmen. Het college is in 1994 ontstaan uit een fusie tussen het CSG Emmen (voor havo en vwo, inclusief gymnasium en vwo+) (toen gevestigd aan de Baander) en de christelijke mavo aan de Emmalaan in Emmen, met de christelijke LTS, eveneens aan de Emmalaan in Emmen.
-
-Sinds 1996 zijn de sectoren havo en vwo eveneens gevestigd aan de Emmalaan in een nieuw schoolgebouw, op de plek waar voorheen het KDC (Katholiek Drents College, nu Carmelcollege Emmen) gevestigd was.
-
-Het Hondsrug College heeft drie gebouwen in Emmen
+            Log in via het menu om gebruik te kunnen maken van het systeem, lukt dit niet neem contact op met de beheerder van het systeem.<br />
+            <i>beheerder@hondsrugcollege.nl</i>
           </div>
         </div>
           <div class="col-lg-6">
             <img src="https://learnbeat.nl/content/1-learnbeat/1-scholen/hondsrug-college/hondsrug-college.png"/>
             <div class="col-lg-12">
-              Exact Anders is een leerling systeem waar leerlingen en docenten voortgangen in moeten gaan bijhouden. Het doel van dit systeem is dat de papieren manier van aanvullen van huiswerk overbodig wordt en dit gedigitaliseerd wordt. Doordat het gedigitaliseerd wordt is het daarentegen ook gelijk bruikbaar om feedback te geven als het archiveren van documenten.
+
             </div>
             <div class="col-lg-12 ">
 

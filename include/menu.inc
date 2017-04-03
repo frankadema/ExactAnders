@@ -24,23 +24,28 @@
   if(!empty($_SESSION['docent']))
   {
   ?>
-  <li><a href="vakken_docent.php">vakken</a></li>
+  <li><a href="index_docent.php">Startpagina</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vakken<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a href="#">Vak invulling</a></li>
+      <li><a href="#">Opdrachten</a></li>
+    </ul>
+  </li>
+  <li><a href="#">Leerlingen</a></li>
   <?php
   }
   if(!empty($_SESSION['leerling']))
   {
   ?>
-  <li><a href="#">Voortgangenleelring</a></li>
+  <li><a href="index_leerling.php">Startpagina</a></li>
+  <li><a href="#">Voortgang</a></li>
+  <li><a href="#">Vakken</a></li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Opdrachten<span class="caret"></span></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beoordelen<span class="caret"></span></a>
     <ul class="dropdown-menu">
-      <li><a href="#">Vak 1</a></li>
-      <li><a href="#">Vak 1</a></li>
-      <li><a href="#">Vak 2</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Beoordelen vak</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Beoordelen docent</a></li>
+      <li><a href="#">Docenten</a></li>
+      <li><a href="#">Vakken</a></li>
     </ul>
   </li>
   <?php
@@ -48,7 +53,7 @@
   if(!empty($_SESSION['administrator']))
   {
   ?>
-  <li><a href="#">Instellingen</a></li>
+  <li><a href="index_administrator.php">Startpagina</a></li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Docent<span class="caret"></span></a>
     <ul class="dropdown-menu">
@@ -147,7 +152,11 @@ if(isset($_POST['submit']))
   {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $password = hash('sha256', $password);//sha256
+    $salt = "L_E_E_R_L_I_N_G-10#exactanders";
+    //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
+    $password = hash('sha256', $salt.$password);//sha256
+
+    $password = hash('sha256', $salt.$password);
 
     $sql = "SELECT leerling_id, firstname, lastname, username FROM leerling WHERE username = '$username' AND password = '$password' LIMIT 1";
     $result = $conn->query($sql);
@@ -172,8 +181,12 @@ if(isset($_POST['submit']))
   {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $password = hash('sha256', $password);//sha256
 
+    $salt = "D_O_C_E_N_T-10#exactanders";
+    //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
+    $password = hash('sha256', $salt.$password);//sha256
+
+    $password = hash('sha256', $salt.$password);
     $sql = "SELECT docent_id, firstname, lastname, username FROM docent WHERE username = '$username' AND password = '$password' LIMIT 1";
     $result = $conn->query($sql);
 
@@ -198,7 +211,14 @@ if(isset($_POST['submit']))
   {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $password = hash('sha256', $password);//sha256
+
+
+    $salt = "A_D_M_I_N_I_S_T_A_T_O_R-10#exactanders";
+    //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
+    $password = hash('sha256', $salt.$password);//sha256
+
+    $password = hash('sha256', $salt.$password);
+
 
     $sql = "SELECT administrator_id, firstname, lastname, username FROM administrator WHERE username = '$username' AND password = '$password' LIMIT 1";
     $result = $conn->query($sql);

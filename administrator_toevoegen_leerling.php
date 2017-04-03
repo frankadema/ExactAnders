@@ -31,9 +31,11 @@
             $einddatum = $_POST['einddatum'];
 
             //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
-            $password = hash('sha256', $password);//sha256
+              $salt = "L_E_E_R_L_I_N_G-10#exactanders";
+            //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
+            $password = hash('sha256', $salt.$password);//sha256
 
-
+            $password = hash('sha256', $salt.$password);
 
             $sql = "INSERT INTO tech_ExactAnders.leerling (firstname, lastname, email, password, username, startdatum, einddatum)
                VALUES ('$firstname','$lastname','$email','$password','$username', '$startdatum', '$einddatum')";

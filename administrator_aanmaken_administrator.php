@@ -56,8 +56,11 @@
                     $password = $_POST['password'];
                     $username = $_POST['username'];
 
+                    $salt = "A_D_M_I_N_I_S_T_A_T_O_R-10#exactanders";
                     //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
-                    $password = hash('sha256', $password);//sha256
+                    $password = hash('sha256', $salt.$password);//sha256
+
+                    $password = hash('sha256', $salt.$password);
 
 
 

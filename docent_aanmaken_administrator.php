@@ -59,8 +59,11 @@
                     $einddatum = $_POST['einddatum'];
 
                     //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
-                    $password = hash('sha256', $password);//sha256
+                    $salt = "D_O_C_E_N_T-10#exactanders";
+                    //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
+                    $password = hash('sha256', $salt.$password);//sha256
 
+                    $password = hash('sha256', $salt.$password);
 
 
                     $sql = "INSERT INTO tech_ExactAnders.docent (firstname, lastname, email, password, username, startdatum, einddatum)
