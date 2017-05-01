@@ -41,9 +41,45 @@
         <div class="row">
           <div class="col-lg-6">
           <div class="col-lg-12">
-            <h1>Leerlinginfo</h1>
+            <h1>Vakken die leerling volgt:</h1>
+            <?php
+            $leerling_id = $_SESSION['leerling'];
+            $sql = "SELECT vak.vak_id, vak.vaknaam
+                    FROM leerling, vak, vakleerling
+                    WHERE leerling.leerling_id = vakleerling.leerling_id
+                    AND vakleerling.vak_id = vak.vak_id
+                    AND vakleerling.leerling_id = $leerling_id";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0)
+            {
+
+            }
+            else
+            {
+            echo "Probeer opnieuw";
+            }
+            echo "<table class='table table-hover'>";
+            echo "<tr><td><h4>Vaknaam</h4></td><td><h4>Vaknummer</h4></td></tr>";
+            echo "<form action='vak_overzicht_inzien_leerling.php' method='post'>";
+            $vak_id = 0;
+                        while($row = $result->fetch_assoc())
+                        {
+                          $vak_id = $row['vak_id'];
+
+                        //  echo "<input type='hidden' name='vak_id' value='$vak_id'>";
+                          echo "<tr><td>";
+                          echo $row['vaknaam'];
+                          echo "</td><td><input type='submit' name='submit' value='$vak_id'></td></tr>";
+
+
+                        }
+                                      echo "<form>";
+            echo "</table>"
+
+
+            ?>
             <p>
-              Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />
             </p>
           </div>
         </div>
