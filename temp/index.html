@@ -1,0 +1,94 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title></title>
+</head>
+<body>
+  test
+  <div style="width: 501px">
+    <canvas id="lineChart" width="100%" height="100%"></canvas>
+  </div>
+  <!--<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>-->
+  <script src="http://momentjs.com/downloads/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script><!--moet na moment.js voor uitlijning-->
+    <!--<script src="js/main.js"></script>-->
+    <script>
+
+
+    // Any of the following formats may be used
+    const CHART = document.getElementById("lineChart");
+
+    var lineChart = new Chart(CHART, {
+        type: 'bar',
+        options: {
+
+            scales: {
+                yAxes: [{
+                    ticks: {
+
+                        min: 0,
+                        max: 10
+
+                    }
+                }]
+            }
+        },
+
+        data:{
+    labels: ["Opdracht 1", "Opdracht 2", "Opdracht 3", "Opdracht 4", "Opdracht 5", "Opdracht 6", "Opdracht 7"],
+    datasets: [
+        {
+            label: "Beoordeling leerling",
+            backgroundColor: [
+                '#000000',
+                '#000000',
+                '#000000',
+                '#000000',
+                '#000000',
+                '#000000',
+                '#000000'
+            ],
+            borderColor: [
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000'
+            ],
+            borderWidth: 1,
+            data: [5.5, 5.6, 5.7, 8.1, 5.4, 2.1, 9.5],
+        },
+        {
+            label: "Beoordeling docent",
+            backgroundColor: [
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000',
+              '#FF0000'
+            ],
+            borderColor: [
+              '#000000',
+              '#000000',
+              '#000000',
+              '#000000',
+              '#000000',
+              '#000000',
+              '#000000'
+            ],
+            borderWidth: 1,
+            data: [5.5, 7, 5.7, 4, 5.4, 2.1, 4],
+        }
+    ]
+}
+    });
+
+    </script>
+
+</body>
+</html>

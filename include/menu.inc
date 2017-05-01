@@ -26,10 +26,10 @@
   ?>
   <li><a href="index_docent.php">Startpagina</a></li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vakken<span class="caret"></span></a>
+    <a href="vak_docent.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vakken<span class="caret"></span></a>
     <ul class="dropdown-menu">
-      <li><a href="#">Vak invulling</a></li>
-      <li><a href="#">Opdrachten</a></li>
+      <li><a href="vak_docent.php">Vakken</a></li>
+
     </ul>
   </li>
   <li><a href="#">Leerlingen</a></li>
@@ -40,7 +40,7 @@
   ?>
   <li><a href="index_leerling.php">Startpagina</a></li>
   <li><a href="#">Voortgang</a></li>
-  <li><a href="#">Vakken</a></li>
+  <li><a href="vakken_leerling.php">Vakken</a></li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beoordelen<span class="caret"></span></a>
     <ul class="dropdown-menu">

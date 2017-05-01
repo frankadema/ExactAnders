@@ -39,6 +39,7 @@ a:active {
     color: #ffffff;
 }
 
+
 .center
 {
   text-align: center;
@@ -71,6 +72,11 @@ a:active {
 h1, h2, h3, h4, h5, h6
 {
   color: #d0661c;
+}
+
+h4
+{
+  font-weight: bold;
 }
 
 table, tr, td
