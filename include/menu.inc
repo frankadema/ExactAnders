@@ -44,8 +44,8 @@
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beoordelen<span class="caret"></span></a>
     <ul class="dropdown-menu">
-      <li><a href="#">Docenten</a></li>
-      <li><a href="#">Vakken</a></li>
+      <li><a href="beoordeelDocent.php">Docenten</a></li>
+      <li><a href="beoordeelVak.php">Vakken</a></li>
     </ul>
   </li>
   <?php
