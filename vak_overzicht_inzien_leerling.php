@@ -48,7 +48,7 @@
           if(isset($_POST['submit2']))
           {
 
-            $vak_id = $_SESSION['vak_id'];
+            $vak_id = $_POST['vak_id'];
             $vakhuiswerk_id = $_POST['vakhuiswerk_id'];
             $inlevermoment = $_POST['inlevermoment'];
             $beoordeling = $_POST['beoordeling'];
@@ -157,7 +157,7 @@
                 }
                 else
                 {
-                echo "Probeer opnieuw";
+                echo "Probeer opnieuw!";
                 }
 
             ?>
@@ -206,6 +206,8 @@
             <td>:</td>
             <td>
             <input name="uploadedfile" type="file"/><br />
+            <input type="hidden" name="vak_id" value="<?php echo $vak_id?>">
+
             <input type="submit" name="submit2" value="Upload Opdracht" /></td>
             </tr>
             </table>
@@ -274,16 +276,168 @@
           <div class="col-lg-12">
           <div class="col-lg-6">
             <h1>Voortgang vak</h1>
-            <p>evt grafiek</p>
+            <canvas id="lineChart" width="50%" height="50%"></canvas>
+
+            <?php
+
+            $sql = "SELECT beoordeeldocent.cijfer, beoordeeldocent.leerling_id, beoordeeldocent.feedback, beoordeeldocent.docent_id, leerling.firstname, leerling.lastname
+                    FROM beoordeeldocent, docent, leerling
+                    WHERE beoordeeldocent.docent_id = docent.docent_id
+                    AND beoordeeldocent.leerling_id = leerling.leerling_id
+                    AND beoordeeldocent.docent_id = 7";
+
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0)
+            {
+
+            }
+            else
+            {
+            echo "Alle docenten zijn tot nu toe beoordeeld";
+            }
+            $sql3 = "SELECT beoordeeldocent.cijfer, beoordeeldocent.leerling_id, beoordeeldocent.feedback, beoordeeldocent.docent_id, leerling.firstname, leerling.lastname
+                    FROM beoordeeldocent, docent, leerling
+                    WHERE beoordeeldocent.docent_id = docent.docent_id
+                    AND beoordeeldocent.leerling_id = leerling.leerling_id
+                    AND beoordeeldocent.docent_id = 7";
+
+            $result3 = $conn->query($sql3);
+            if ($result3->num_rows > 0)
+            {
+
+            }
+            else
+            {
+            echo "Alle docenten zijn tot nu toe beoordeeld";
+            }
+
+
+            $sql2 = "SELECT beoordeeldocent.cijfer, beoordeeldocent.leerling_id, beoordeeldocent.feedback, beoordeeldocent.docent_id, leerling.firstname, leerling.lastname
+                    FROM beoordeeldocent, docent, leerling
+                    WHERE beoordeeldocent.docent_id = docent.docent_id
+                    AND beoordeeldocent.leerling_id = leerling.leerling_id
+                    AND beoordeeldocent.docent_id = 7";
+
+            $result2 = $conn->query($sql2);
+            if ($result2->num_rows > 0)
+            {
+
+            }
+            else
+            {
+            echo "Alle docenten zijn tot nu toe beoordeeld";
+            }
+
+
+          
+?>
+<script>
+
+  // Any of the following formats may be used
+  const CHART = document.getElementById("lineChart");
+
+  var lineChart = new Chart(CHART, {
+      type: 'bar',
+      options: {
+
+          scales: {
+              yAxes: [{
+                  ticks: {
+
+                      min: 0,
+                      max: 10
+
+                  }
+              }]
+          }
+      },
+
+      data:{
+
+  labels:
+  [
+    <?php
+    while($row = $result->fetch_assoc())
+    {
+       echo '"'.$row['firstname'].' '.$row['lastname'].'",';
+
+    }
+    ?>
+  ],
+  datasets: [
+      {
+
+          label: "Beoordeling leerling",
+          backgroundColor: [
+              '#007e00',
+              '#007e00',
+              '#007e00',
+              '#007e00',
+              '#007e00',
+              '#007e00',
+              '#007e00'
+          ],
+          borderColor: [
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000'
+          ],
+          borderWidth: 1,
+          data:
+          [
+            <?php
+            while($row2 = $result2->fetch_assoc())
+            {
+               echo $row2['cijfer'].',';
+
+            }
+            ?>
+          //5.5, 5.6, 5.7, 8.1, 5.4, 2.1, 9.5
+          ],
+      }/*,
+      {
+          label: "Beoordeling docent",
+          backgroundColor: [
+            '#d0661c',
+            '#d0661c',
+            '#d0661c',
+            '#d0661c',
+            '#d0661c',
+            '#d0661c',
+            '#d0661c'
+          ],
+          borderColor: [
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000',
+            '#FF0000'
+          ],
+          borderWidth: 1,
+          data: [5.5, 7, 5.7, 4, 5.4, 2.1, 4],
+      }*/
+  ]
+}
+  });
+
+  </script>
           </div>
           <div class="col-lg-6">
             <h1>Overzicht documenten</h1>
 
             <?php
+
             $sql5 = "SELECT vakhuiswerk.Opdrachtnaam, vakhuiswerkleerling.urlleerling, vakhuiswerkleerling.feedback, vakhuiswerkleerling.urldocent, vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent
             FROM vakhuiswerkleerling, vakhuiswerk
             WHERE vakhuiswerkleerling.vakhuiswerk_id = vakhuiswerk.vakhuiswerk_id
-            AND vakhuiswerkleerling.leerling_id = $leerling_id";
+            AND vakhuiswerkleerling.urldocent <> ''
+            AND vakhuiswerkleerling.leerling_id = 5";
             $result5 = $conn->query($sql5);
 
             if ($result5->num_rows > 0)
@@ -292,14 +446,14 @@
             }
             else
             {
-            echo "Probeer opnieuw";
+            echo "Probeer opnieuw2";
             }
             ?>
 
             <table class='table table-hover'>
               <tr>
                 <td><h4>Opdrachtnaam</h4></td>
-                <td><h4>Document inzien</h4></td>
+                <td><h4>feedback inzien</h4></td>
                 <td><h4>Feedback</h4></td>
                 <td><h4>Leerling</h4></td>
                 <td><h4>Docent</h4></td>
@@ -308,7 +462,7 @@
               while($row5 = $result5->fetch_assoc())
               {
                 //echo "<tr><td>".$row5['Opdrachtnaam']."</td><td><a href='leerling_documenten/".$row5['urlleerling']."'target="_blank"/>".$row5['urlleerling']."</a></td><td>".$row5['feedback']."</td><td>".$row5['cijferleerling']."</td><td>".$row5['cijferdocent']."</td></tr>";
-                echo "<tr><td>".$row5['Opdrachtnaam']."</td><td><a href='leerling_documenten/".$row5['urlleerling']."' target='_blank' class='btn btn-warning' >".$row5['urlleerling']."</a></td><td>".$row5['feedback']."</td><td>".$row5['cijferleerling']."</td><td>".$row5['cijferdocent']."</td></tr>";
+                echo "<tr><td>".$row5['Opdrachtnaam']."</td><td><a href='leerling_documenten/".$row5['urldocent']."' target='_blank' class='btn btn-warning' >".$row5['urldocent']."</a></td><td>".$row5['feedback']."</td><td>".$row5['cijferleerling']."</td><td>".$row5['cijferdocent']."</td></tr>";
               }
               ?>
             </table>

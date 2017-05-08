@@ -9,4 +9,7 @@
     <div class="col-lg-4 padding"></div>
   </div>
 </div>
+
+<script src="js/moments.js"></script>
+<script src="js/Chart.bundle.js"></script><!--moet na moment.js voor uitlijning-->
 <!--header-end-->

@@ -13,8 +13,7 @@
   <!--css exact anders-->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/normalize.css">
-  <script src="js/moments.js"></script>
-  <script src="js/Chart.bundle.js"></script><!--moet na moment.js voor uitlijning-->
+
 
 </head>
   <body>
@@ -156,7 +155,7 @@
         ],
         datasets: [
             {
-              
+
                 label: "Beoordeling leerling",
                 backgroundColor: [
                     '#007e00',

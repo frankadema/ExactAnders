@@ -309,7 +309,7 @@
 
 
             <?php
-                $sql6 = "SELECT leerling.firstname, leerling.lastname, vakhuiswerk.Opdrachtnaam, vakhuiswerk.duedate, vakhuiswerkleerling.inlevermoment, vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent, vakhuiswerkleerling.urlleerling, vakhuiswerkleerling.urldocent, vakhuiswerkleerling.vakhuiswerkleerling_id
+                $sql6 = "SELECT leerling.leerling_id, leerling.firstname, leerling.lastname, vakhuiswerk.Opdrachtnaam, vakhuiswerk.duedate, vakhuiswerkleerling.inlevermoment, vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent, vakhuiswerkleerling.urlleerling, vakhuiswerkleerling.urldocent, vakhuiswerkleerling.vakhuiswerkleerling_id, vakhuiswerkleerling.vakhuiswerk_id
                         FROM vakhuiswerkleerling, leerling, vakhuiswerk
                         WHERE vakhuiswerkleerling.leerling_id = leerling.leerling_id
                         AND vakhuiswerk.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
@@ -380,10 +380,14 @@
                     </td>
                     <td>
                       <input type="hidden" name="firstname" value="<?php echo $row6['firstname'];?>">
+                      <input type="hidden" name="leerling_id" value="<?php echo $row6['leerling_id'];?>">
                       <input type="hidden" name="lastname" value="<?php echo $row6['lastname'];?>">
+                      <input type="hidden" name="inlevermoment" value="<?php echo $row6['inlevermoment'];?>">
                       <input type="hidden" name="cijferdocent" value="<?php echo $row6['cijferdocent']?>">
                       <input type="hidden" name="cijferleerling" value="<?php echo $row6['cijferleerling']?>">
                       <input type="hidden" name="opdrachtnaam" value="<?php echo $row6['opdrachtnaam']?>">
+                      <input type="hidden" name="vakhuiswerk_id" value="<?php echo $row6['vakhuiswerk_id']?>">
+
 
                     <input type='submit' name='submit' value='<?php echo $row6['vakhuiswerkleerling_id'];?>' class="btn btn-warning">
 
