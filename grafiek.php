@@ -5,15 +5,19 @@
 <title></title>
 </head>
 <body>
-  test
+  <style>
+    h1
+    {
+      color: #d0661c;
+    }
+  </style>
+  <h1>Wiksunde</h1>
   <div style="width: 501px">
     <canvas id="lineChart" width="100%" height="100%"></canvas>
   </div>
-  <!--<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>-->
-  <script src="http://momentjs.com/downloads/moment.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script><!--moet na moment.js voor uitlijning-->
-    <!--<script src="js/main.js"></script>-->
-    <script>
+  <script src="js/moments.js"></script>
+  <script src="js/Chart.bundle.js"></script><!--moet na moment.js voor uitlijning-->
+  <script>
 
 
     // Any of the following formats may be used
@@ -36,18 +40,18 @@
         },
 
         data:{
-    labels: ["Opdracht 1", "Opdracht 2", "Opdracht 3", "Opdracht 4", "Opdracht 5", "Opdracht 6", "Opdracht 7"],
+    labels: ["Grafieken", "Tabellen", "Kwadraten", "Vergelijkingen", "De driehoek van Pascal", "Somregel", "Halveringstijde & verdubbelingstijd"],
     datasets: [
         {
             label: "Beoordeling leerling",
             backgroundColor: [
-                '#000000',
-                '#000000',
-                '#000000',
-                '#000000',
-                '#000000',
-                '#000000',
-                '#000000'
+                '#007e00',
+                '#007e00',
+                '#007e00',
+                '#007e00',
+                '#007e00',
+                '#007e00',
+                '#007e00'
             ],
             borderColor: [
               '#FF0000',
@@ -64,6 +68,15 @@
         {
             label: "Beoordeling docent",
             backgroundColor: [
+              '#d0661c',
+              '#d0661c',
+              '#d0661c',
+              '#d0661c',
+              '#d0661c',
+              '#d0661c',
+              '#d0661c'
+            ],
+            borderColor: [
               '#FF0000',
               '#FF0000',
               '#FF0000',
@@ -71,15 +84,6 @@
               '#FF0000',
               '#FF0000',
               '#FF0000'
-            ],
-            borderColor: [
-              '#000000',
-              '#000000',
-              '#000000',
-              '#000000',
-              '#000000',
-              '#000000',
-              '#000000'
             ],
             borderWidth: 1,
             data: [5.5, 7, 5.7, 4, 5.4, 2.1, 4],

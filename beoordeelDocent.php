@@ -55,7 +55,7 @@
             }
             else
             {
-            echo "Alle docenten zijn tot nu toe beoordeeld";
+            echo "Probeer opnieuw";
             }
             ?>
             <h1>Beoordeel docent</h1>
