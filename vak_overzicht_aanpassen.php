@@ -50,6 +50,63 @@
     //  $_SESSION['vak_id'] = $vak_id;
     //$vak_id = $_SESSION['vak_id'] ;
 
+    if(isset($_POST['submit9']))
+    {
+      $groepsnaam = $_POST['groepsnaam'];
+      $opdracht_id = $_POST['opdracht_id'];
+      //  $vak_id = $_POST['vak_id'];
+      $leider = $_POST['leider_id'];
+
+      $sql12 = "INSERT INTO tech_ExactAnders.groepinfo  (vakhuiswerk_id, groepnaam, leerling_leider)
+      VALUES ('$opdracht_id', '$groepsnaam', '$leider')";
+      if ($conn->query($sql12) === TRUE)
+      {
+        $sql20 = "SELECT groep_id
+        FROM groepinfo
+        WHERE vakhuiswerk_id = $opdracht_id
+        AND groepnaam = '$groepsnaam'
+        AND leerling_leider = $leider";
+        $result20 = $conn->query($sql20);
+
+        if ($result20->num_rows > 0)
+        {
+          echo "done";
+          $row20 = $result20->fetch_assoc();
+          $groep_id = $row20['groep_id'];
+
+          //echo $groep_id;
+
+
+          foreach ($_POST['leerling_id'] as $id)
+          {
+            //echo $groep_id;
+
+            $sql21 = "INSERT INTO tech_ExactAnders.groep (leerling_id, groep_id)
+            VALUES ('$id','$groep_id')";
+
+            if ($conn->query($sql21) === TRUE)
+            {
+              echo "New record created successfully";
+            }
+            else
+            {
+              echo "Error: " . $sql21 . "<br>" . $conn->error;
+            }
+          }
+
+        }
+        else
+        {
+          //  echo "Error: " . $sql20 . "<br>" . $conn->error;
+        }
+
+      }
+      else
+      {
+        //echo "Error: " . $sql12 . "<br>" . $conn->error;
+      }
+
+    }
 
 
     if(isset($_POST['submit4']))
@@ -164,7 +221,7 @@
     }
     else
     {
-      echo "Probeer opnieuw";
+      //echo "Probeer opnieuw1";
     }
     $row = $result->fetch_assoc();
 
@@ -208,7 +265,7 @@
           }
           else
           {
-            echo "Probeer opnieuw";
+            echo "Probeer opnieuw2";
           }
 
           ?>
@@ -260,7 +317,7 @@
             }
             else
             {
-              echo "Probeer opnieuw";
+              echo "Probeer opnieuw3";
             }
 
             ?>
@@ -323,7 +380,7 @@
             }
             else
             {
-              echo "Probeer opnieuw";
+              echo "Probeer opnieuw4";
             }
 
             ?>
@@ -420,58 +477,108 @@
               }
               else
               {
-                echo "Probeer opnieuw!";
+                echo "Probeer opnieuw5!";
               }
 
+
               ?>
-              <table class='table table-hover'>
-                <tr>
-                  <td>Groepsnaam</td>
-                  <td><input type="text" name="groepsnaam"/></td>
-                </tr>
-                <tr>
-                  <td>Opdracht</td>
-                  <td>
-                    <select name="opdracht_id">
+              <form <?php echo $_SERVER['PHP_SELF']; ?> method="POST">
+
+                <table class='table table-hover'>
+                  <tr>
+                    <td>Groepsnaam</td>
+                    <td><input type="text" name="groepsnaam"/></td>
+                  </tr>
+                  <tr>
+                    <td>Opdracht</td>
+                    <td>
+                      <select name="opdracht_id">
+                        <?php
+                        while($row2 = $result2->fetch_assoc())
+                        {
+                          echo "<option value='".$row2['vakhuiswerk_id']."'>".$row2['Opdrachtnaam']."</option>";
+
+                        }
+                        ?>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Leerlingen</td>
+                    <td>
                       <?php
-                      while($row2 = $result2->fetch_assoc())
+                      $sql8 = "SELECT leerling.leerling_id, leerling.firstname, leerling.lastname
+                      FROM leerling, vakleerling
+                      WHERE leerling.leerling_id = vakleerling.leerling_id
+                      AND vakleerling.vak_id = $vak_id";
+
+
+                      $result8 = $conn->query($sql8);
+
+                      if ($result8->num_rows > 0)
                       {
-                        echo "<option value='".$row2['vakhuiswerk_id']."'>".$row2['Opdrachtnaam']."</option>";
 
                       }
+                      else
+                      {
+                        echo "Er zijn geen leerlingen meer";
+                      }
                       ?>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Leerlingen</td>
-                  <td>
-                    <select name="groepleerling_id[]" multiple>
+                      <select name="leerling_id[]" multiple>
+                        <?php
+                        while($row8 = $result8->fetch_assoc())
+                        {
+                          echo "<option value='".$row8['leerling_id']."'>".$row8['firstname']." ".$row8['lastname']."</option>";
+
+                        }
+                        ?>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Leider</td>
+                    <td>
+                      <?php
+
+                      $sql9 = "SELECT leerling.leerling_id, leerling.firstname, leerling.lastname
+                      FROM leerling, vakleerling
+                      WHERE leerling.leerling_id = vakleerling.leerling_id
+                      AND vakleerling.vak_id = $vak_id";
 
 
-                      <option value='1'>1</option>
-                      <option value='1'>1</option>
-                      <option value='1'>1</option>
-                      <option value='1'>1</option>
+                      $result9 = $conn->query($sql9);
 
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Verantwoordelijke</td>
-                  <td>
-                    <select name="leerling_id">
+                      if ($result9->num_rows > 0)
+                      {
 
+                      }
+                      else
+                      {
+                        echo "Er zijn geen leerlingen meer";
+                      }
+                      ?>
 
-                      <option value='1'>1</option>
-                      <option value='1'>1</option>
-                      <option value='1'>1</option>
-                      <option value='1'>1</option>
+                      <select name="leider_id" >
+                        <?php
+                        while($row9 = $result9->fetch_assoc())
+                        {
+                          echo "<option value='".$row9['leerling_id']."'>".$row9['firstname']." ".$row9['lastname']."</option>";
 
-                    </select>
-                  </td>
-                </tr>
-              </table>
+                        }
+                        ?>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <input type="submit" name="submit9" value="Toevoegen" /></td>
+
+                    </td>
+                  </tr>
+                  <input type='hidden' name='vak_id' value='<?echo $_SESSION['vak_id']?>'>
+                </table>
+              </form>
             </div>
             <div class="col-lg-6">
             </div>
