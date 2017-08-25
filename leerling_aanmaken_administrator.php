@@ -71,11 +71,12 @@
                        VALUES ('$firstname','$lastname','$email','$password','$username', '$startdatum', '$einddatum')";
                   if ($conn->query($sql) === TRUE)
                   {
-                    echo "New record created successfully";
+                    echo "record is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
+                    echo '<meta http-equiv="refresh" content="2;url=index.php">';
                   }
                   else
                   {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
+                    echo "Fout neem contact op met de beheerder";
                   }
 
 
@@ -131,12 +132,12 @@
                   <tr>
                     <td>Startdatum</td>
                     <td>:</td>
-                    <td><input type='text' name='startdatum' placeholder='yyyy-mm-dd'></td>
+                    <td><input id='date' type='date' name='startdatum' ></td>
                   </tr>
                   <tr>
                     <td>Einddatum</td>
                     <td>:</td>
-                    <td><input type='text' name='einddatum' placeholder='yyyy-mm-dd'></td>
+                    <td><input id='date' type='date' name='einddatum' ></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>

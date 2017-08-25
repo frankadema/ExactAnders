@@ -32,14 +32,14 @@ include ("include/connect.inc");
 
                 </ul>
               </li>
-              <li><a href="#">Leerlingen</a></li>
+              <li><a href="leerling_info_inzien_docent.php">Leerlingen</a></li>
               <?php
             }
             if(!empty($_SESSION['leerling']))
             {
               ?>
               <li><a href="index_leerling.php">Startpagina</a></li>
-              <li><a href="#">Voortgang</a></li>
+              <!--<li><a href="#">Voortgang</a></li>-->
               <li><a href="vakken_leerling.php">Vakken</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beoordelen<span class="caret"></span></a>
@@ -88,9 +88,8 @@ include ("include/connect.inc");
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beoordelingen<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Docent</a></li>
-                  <li><a href="#">Vak</a></li>
-                  <li><a href="#"></a></li>
+                  <li><a href="docent_beoordelen_administrator.php">Docent</a></li>
+                  <li><a href="vak_beoordelen_administrator.php">Vak</a></li>
                 </ul>
               </li>
               <?php
@@ -105,7 +104,7 @@ include ("include/connect.inc");
                 <form method="post"  action"<?php echo $_SERVER['PHP_SELF']; ?>" class="navbar-form navbar-left" role="login">
                   <div class="form-group">
                     <input type="text" class="form-control" name="username" id="username" placeholder="Gebruikersnaam">
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Wachwoord">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Wachtwoord">
 
                     <select name="usertype" class="form-control" id="type">
                       <option value="1">Leerling</option>
@@ -157,7 +156,7 @@ if(isset($_POST['submit']))
 
     $password = hash('sha256', $salt.$password);
 
-    $sql = "SELECT leerling_id, firstname, lastname, username FROM leerling WHERE username = '$username' AND password = '$password' LIMIT 1";
+    $sql = "SELECT leerling_id, firstname, lastname, username FROM leerling WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE() - 1) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >0 LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)
@@ -173,7 +172,7 @@ if(isset($_POST['submit']))
     }
     else
     {
-      echo "Probeer opnieuw";
+      echo "Probeer opnieuw of neem contact op met de administrator van dit systeem.";
     }
   }
   if($type == 2)
@@ -186,7 +185,8 @@ if(isset($_POST['submit']))
     $password = hash('sha256', $salt.$password);//sha256
 
     $password = hash('sha256', $salt.$password);
-    $sql = "SELECT docent_id, firstname, lastname, username FROM docent WHERE username = '$username' AND password = '$password' LIMIT 1";
+    echo $password;
+    $sql = "SELECT docent_id, firstname, lastname, username FROM docent WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE() - 1) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >0 LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)
@@ -203,7 +203,7 @@ if(isset($_POST['submit']))
     }
     else
     {
-      echo "Probeer opnieuw";
+      echo "Probeer opnieuw of neem contact op met de administrator van dit systeem.";
     }
   }
   if($type == 3)
@@ -235,7 +235,7 @@ if(isset($_POST['submit']))
     }
     else
     {
-      echo "Probeer opnieuw";
+      echo "Probeer opnieuw of neem contact op met de administrator van dit systeem.";
     }
   }
 }

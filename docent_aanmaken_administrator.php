@@ -17,6 +17,7 @@
 </head>
   <body>
     <?php
+    //include header
       include ("include/header.inc");
     ?>
 
@@ -25,6 +26,7 @@
         <?php
           include ("include/menu.inc");
 
+          //check role administrator
           if(empty($_SESSION['administrator']))
           {
             echo "Er iets fout gegaan, ga terug naar het begin scherm!";
@@ -35,10 +37,12 @@
         <div class="row content">
           <div class="col-lg-12 center">
             <?php
+            //add new user database
             echo"<h1>Docent toevoegen</h1>";
             $form_verstuurd = 0;
             if(isset($_POST['submit']))
             {
+              //checks
               if(empty($_POST['username']) OR empty($_POST['password']) OR empty($_POST['password2']) OR empty($_POST['mail']) OR empty($_POST['firstname']) OR empty($_POST['lastname']) )
               {
                 echo "<h3>Vul de gegevens compleet in </h3>";
@@ -70,7 +74,10 @@
                        VALUES ('$firstname','$lastname','$email','$password','$username', '$startdatum', '$einddatum')";
                   if ($conn->query($sql) === TRUE)
                   {
-                    echo "record is toegevoegd aan database";
+                    echo "record is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
+                    echo '<meta http-equiv="refresh" content="2;url=index.php">';
+
+
                   }
                   else
                   {
@@ -131,12 +138,12 @@
                   <tr>
                     <td>Startdatum</td>
                     <td>:</td>
-                    <td><input type='text' name='startdatum' placeholder='yyyy-mm-dd'></td>
+                    <td><input id='date' type='date' name='startdatum' ></td>
                   </tr>
                   <tr>
                     <td>Einddatum</td>
                     <td>:</td>
-                    <td><input type='text' name='einddatum' placeholder='yyyy-mm-dd'></td>
+                    <td><input id='date' type='date' name='einddatum' ></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>

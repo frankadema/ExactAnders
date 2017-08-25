@@ -74,7 +74,7 @@
                   else
                   {
                     echo"fout";
-                    echo "Error: " . $sql . "<br>" . $conn->error;
+                    //echo "Error: " . $sql . "<br>" . $conn->error;
                   }
                 }
 
@@ -85,12 +85,13 @@
 
                 if ($conn->query($sql3) === TRUE)
                 {
-                  echo "record is aangepast aan database";
+                  echo "record is aangepast aan database, u wordt terug getstuurd naar de startpagina";
+                  echo '<meta http-equiv="refresh" content="2;url=index.php">';
                 }
                 else
                 {
                   echo"fout";
-                  echo "Error: " . $sql . "<br>" . $conn->error;
+                  //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
 
 
@@ -102,7 +103,7 @@
             if(isset($_POST['submit']))
             {
 
-              $administrator_id = $_POST['submit'];
+              $administrator_id = $_POST['administrator_id'];
               $sql2 = "SELECT administrator.administrator_id, administrator.email, administrator.firstname, administrator.lastname, administrator.username
               FROM administrator
               WHERE administrator.administrator_id = $administrator_id";
@@ -204,7 +205,8 @@
               echo $row['firstname'];
               echo "</td><td>";
               echo $row['lastname'];
-              echo "</td><td><input type='submit' name='submit' value='$administrator_id'></td></tr>";
+              echo "  <input type='hidden' name='administrator_id' value='$administrator_id'>";
+              echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
 
 
             }

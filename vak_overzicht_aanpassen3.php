@@ -42,9 +42,10 @@
             <?php
             if(isset($_POST['submit2']))
             {
+
               $feedback = $_POST['feedback'];
               $cijferDocent = $_POST['cijferDocent'];
-              $id  = $_POST['id'];
+              $groep_id  = $_POST['groep_id'];
               $leerling_id  = $_POST['leerling_id'];
 
               $vakhuiswerk_id = $_POST['vakhuiswerk_id'];
@@ -65,8 +66,8 @@
                 {
                   if($_FILES["uploadedfile"]["size"] <50000000)//check image size 50000 beteken 500 kb
                   {
-                    $name = $vakhuiswerk_id.'_'.$leerling_id.'_'.$inlevermoment.'_docent.' . $ext;   //rename
-                    $path = "leerling_documenten/" . $name;    //image upload path
+                    $name = $vakhuiswerk_id.'_'.$groep_id.'_'.$inlevermoment.'_docent.' . $ext;   //rename
+                    $path = "groep_documenten/" . $name;    //image upload path
                     move_uploaded_file($_FILES["uploadedfile"]["tmp_name"], $path);
                     echo "file is online";
 
@@ -88,7 +89,7 @@
                 echo '<script>alert("selecteer file")</script>';
               }
 
-              $sql = "UPDATE vakhuiswerkleerling SET feedback = '$feedback', cijferdocent = '$cijferDocent', urldocent = '$name' WHERE vakhuiswerkleerling.vakhuiswerkleerling_id = $id";
+              $sql = "UPDATE vakhuiswerkleerling SET feedback = '$feedback', cijferdocent = '$cijferDocent', urldocent = '$name' WHERE groep_id = $groep_id";
               /*
               $sql2 = "INSERT INTO tech_ExactAnders.vakhuiswerk  (vak_id, docent_id, opdrachtnaam, omschrijving, url, duedate)
               VALUES ('$vak_id', '$docent_id', '$opdrachtnaam', '$opdrachomschrijving', '$name', '$duedate')";
@@ -103,10 +104,8 @@
           }
 
         }?>
-        <h1>uitwerking</h1>
+        <h1>Uitwerking</h1>
         <?php
-        $temp = $_POST['submit'];
-        echo $temp;
 
         ?>
 
@@ -116,7 +115,7 @@
             <tr>
               <td>Naam</td>
               <td>:</td>
-              <td><?php echo $_POST['firstname']." ". $_POST['lastname'];?>
+              <td><?php echo $_POST['groepnaam'];?>
               </td>
             </tr>
             <tr>
@@ -153,9 +152,9 @@
           <tr>
             <td><td>
               <td>
-                <input type="hidden" name="id" value="<?php echo $temp;?>">
+
                 <input type="hidden" name="vakhuiswerk_id" value="<?php echo $_POST['vakhuiswerk_id']?>">
-                <input type="hidden" name="leerling_id" value="<?php echo $_POST['leerling_id']?>">
+                <input type="hidden" name="groep_id" value="<?php echo $_POST['groep_id']?>">
                 <input type="hidden" name="inlevermoment" value="<?php echo $_POST['inlevermoment']?>">
                 <input type="submit" name="submit2" value="Upload Feedback + Opdracht" class="btn btn-warning"/></td>
           </td>

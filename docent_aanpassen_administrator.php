@@ -37,6 +37,7 @@
 
           <h1>Docent aanpassen</h1>
           <?php
+          //update record docent
           if(isset($_POST['submit2']))
           {
             if(empty($_POST['username']) OR empty($_POST['mail']) OR empty($_POST['firstname']) OR empty($_POST['lastname']) )
@@ -79,15 +80,12 @@
                 }
               }
 
-
-              //$sql3 = "INSERT INTO tech_ExactAnders.docent (firstname, lastname, email, password, username, startdatum, einddatum)
-              // VALUES ('$firstname','$lastname','$email','$password','$username', '$startdatum', '$einddatum')";
               $sql3 = "UPDATE docent SET username = '$username', firstname = '$firstname', lastname = '$lastname', startdatum = '$startdatum', einddatum = '$einddatum' WHERE docent.docent_id = '$docent_id'";
 
               if ($conn->query($sql3) === TRUE)
               {
-                echo "record is aangepast aan database";
-              }
+                echo "record is aangepast aan database, u wordt terug getstuurd naar de startpagina";
+                echo '<meta http-equiv="refresh" content="2;url=index.php">';              }
               else
               {
                 echo"fout";
@@ -100,10 +98,11 @@
             }
           }
 
+          //fill selected docent
           if(isset($_POST['submit']))
           {
 
-            $docent_id = $_POST['submit'];
+            $docent_id = $_POST['docent_id'];
             $sql2 = "SELECT docent.docent_id, docent.email,docent.firstname, docent.lastname, docent.username, docent.startdatum, docent.einddatum
             FROM docent
             WHERE docent.docent_id = $docent_id";
@@ -153,87 +152,80 @@
                   <tr>
                     <td>Startdatum</td>
                     <td>:</td>
-                    <td><input type='text' name='startdatum' value='<?php echo $row2['startdatum']?>' placeholder='yyyy-mm-dd'></td>
-                  </tr>
-                  <tr>
                     <td>
-                      Einddatum of blokeerdatum<br />
-                      <i>Na deze datum kan gebruiker systeem niet meer gebruiken</i>
-                    </td>
-                    <td>:</td>
-                    <td><input type='text' name='einddatum' value='<?php echo $row2['einddatum']?>' placeholder='yyyy-mm-dd'></td>
-                  </tr>
-                  <tr>
-                    <td>&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <input type='submit' name='submit2' value='aanpassen'>
+                      <input id='date' type='date' name='startdatum' value='<?php echo $row2['startdatum']?>'></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Einddatum of blokeerdatum<br />
+                        <i>Na deze datum kan gebruiker systeem niet meer gebruiken</i>
+                      </td>
+                      <td>:</td>
+                      <td><input id='date' type='date' name='einddatum' value='<?php echo $row2['einddatum']?>'></td></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <input type='submit' name='submit2' value='aanpassen'>
 
-                    </td>
-                  </tr>
-                </table>
+                      </td>
+                    </tr>
+                  </table>
 
-              </form>
-              <?php
+                </form>
+                <?php
+              }
             }
 
+            //all docents
+            $sql = "SELECT docent.docent_id, docent.firstname, docent.lastname, docent.startdatum, docent.einddatum
+            FROM docent";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0)
+            {
+
+            }
+            else
+            {
+              echo "Probeer opnieuw";
+            }
+
+            echo "<table class='table table-hover'>";
 
 
+            $vak_id = 0;
+            //all users docent
+            while($row = $result->fetch_assoc())
+            {
+              $docent_id = $row['docent_id'];
 
+              echo "<form action='#' method='post'>";
+              echo "<tr><td>";
+              echo $row['firstname'];
+              echo "</td><td>";
+              echo $row['lastname'];
+              echo "  <input type='hidden' name='docent_id' value='$docent_id'>";
+              echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
+              echo "</form>";
 
+            }
 
-
-
-
-
-
-          }
-
-          $sql = "SELECT docent.docent_id, docent.firstname, docent.lastname, docent.startdatum, docent.einddatum
-          FROM docent";
-          $result = $conn->query($sql);
-
-          if ($result->num_rows > 0)
-          {
-
-          }
-          else
-          {
-            echo "Probeer opnieuw";
-          }
-
-          echo "<table class='table table-hover'>";
-
-          echo "<form action='#' method='post'>";
-          $vak_id = 0;
-          while($row = $result->fetch_assoc())
-          {
-            $docent_id = $row['docent_id'];
-
-
-            echo "<tr><td>";
-            echo $row['firstname'];
-            echo "</td><td>";
-            echo $row['lastname'];
-            echo "</td><td><input type='submit' name='submit' value='$docent_id'></td></tr>";
-
-
-          }
-          echo "</form>";
-          echo "</table>";
-          ?>
+            echo "</table>";
+            ?>
+          </div>
         </div>
-      </div>
-      <?php
-    }
+        <?php
+      }
+      ?>
+    </div>
+    <!--end content-->
+    <?php
+    include ("include/footer.inc");
     ?>
-  </div>
-  <!--end content-->
-  <?php
-  include ("include/footer.inc");
-  ?>
-</body>
-</html>
+  </body>
+  </html>

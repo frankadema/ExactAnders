@@ -65,7 +65,7 @@
               else
               {
                 echo"fout";
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                //  echo "Error: " . $sql . "<br>" . $conn->error;
               }
 
               $sql4 = "UPDATE vakdocent SET docent_id = '$docent_id' WHERE vakdocent.vak_id = '$vak_id'";
@@ -77,7 +77,7 @@
               else
               {
                 echo"fout";
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                //echo "Error: " . $sql . "<br>" . $conn->error;
               }
 
               $form_verstuurd++;
@@ -88,7 +88,7 @@
           if(isset($_POST['submit']))
           {
 
-            $vak_id = $_POST['submit'];
+            $vak_id = $_POST['vak_id'];
             $sql2 = "SELECT vak.vak_id, vak.vaknaam,vak.vakomschrijving, docent.firstname, docent.lastname, docent.docent_id
             FROM vak, vakdocent, docent
             WHERE vak.vak_id = vakdocent.vak_id
@@ -203,11 +203,11 @@
 
         echo "<table class='table table-hover'>";
 
-        echo "<form action='#' method='post'>";
         $vak_id = 0;
         while($row = $result->fetch_assoc())
         {
           $vak_id = $row['vak_id'];
+          echo "<form action='#' method='post'>";
 
 
           echo "<tr><td>";
@@ -215,11 +215,12 @@
           echo "</td><td>";
           echo $row['firstname']." ". $row['lastname'];
           echo "</td><td>";
-          echo "</td><td><input type='submit' name='submit' value='$vak_id'></td></tr>";
-
+          echo "  <input type='hidden' name='vak_id' value='$vak_id'>";
+          echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
+          echo "</form>";
 
         }
-        echo "</form>";
+
         echo "</table>";
         ?>
       </div>

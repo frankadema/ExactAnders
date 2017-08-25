@@ -1,7 +1,7 @@
 body
 {
-    background: url("../images/lined_paper.png");
-    color: #000000;
+  background: url("../images/lined_paper.png");
+  color: #000000;
 }
 
 .header
@@ -21,22 +21,22 @@ body
 
 /* unvisited link */
 a:link {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 /* visited link */
 a:visited {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 /* mouse over link */
 a:hover {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 /* selected link */
 a:active {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 
@@ -82,4 +82,87 @@ h4
 table, tr, td
 {
   color: #000000;
+}
+
+/*.tegelGreen
+{
+  width: 123px;
+  height: 121px;
+  float: left;
+  padding-top: 25px;
+  color: #ffffff;
+  font-weight: bold;
+  background-image: url("../images/green.png");
+
+}
+
+.tegelOrange
+{
+  width: 123px;
+  height: 121px;
+  float: left;
+  padding-top: 25px;
+  color: #ffffff;
+  font-weight: bold;
+  background-image: url("../images/orange.png");
+}
+
+.tegelBlue
+{
+  width: 123px;
+  height: 121px;
+  float: left;
+  padding-top: 25px;
+  color: #ffffff;
+  font-weight: bold;
+  background-image: url("../images/blue.png");
+}*/
+
+.tegelBlue
+{
+  background-image: url("../images/blue.png");
+  border: none;
+    float: left;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 123px;
+  height: 121px;
+}
+.tegelOrange
+{
+  background-image: url("../images/orange.png");
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+    float: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 123px;
+  height: 121px;
+}
+.tegelGreen
+{
+  background-image: url("../images/green.png");
+  border: none;
+  color: white;
+  padding: 15px 32px;
+    float: left;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 123px;
+  height: 121px;
 }

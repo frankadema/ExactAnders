@@ -75,23 +75,21 @@
                 else
                 {
                   echo"fout";
-                  echo "Error: " . $sql . "<br>" . $conn->error;
+                  //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
               }
 
-
-              //$sql3 = "INSERT INTO tech_ExactAnders.docent (firstname, lastname, email, password, username, startdatum, einddatum)
-              // VALUES ('$firstname','$lastname','$email','$password','$username', '$startdatum', '$einddatum')";
               $sql3 = "UPDATE leerling SET username = '$username', firstname = '$firstname', lastname = '$lastname', startdatum = '$startdatum', einddatum = '$einddatum' WHERE leerling.leerling_id = '$leerling_id'";
 
               if ($conn->query($sql3) === TRUE)
               {
-                echo "record is aangepast aan database";
+                echo "record is aangepast aan database, u wordt terug getstuurd naar de startpagina";
+                echo '<meta http-equiv="refresh" content="2;url=index.php">';
               }
               else
               {
                 echo"fout";
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                //  echo "Error: " . $sql . "<br>" . $conn->error;
               }
 
 
@@ -103,7 +101,7 @@
           if(isset($_POST['submit']))
           {
 
-            $leerling_id = $_POST['submit'];
+            $leerling_id = $_POST['leerling_id'];
             $sql2 = "SELECT leerling.leerling_id, leerling.email, leerling.firstname, leerling.lastname, leerling.username, leerling.startdatum, leerling.einddatum
             FROM leerling
             WHERE leerling.leerling_id = $leerling_id";
@@ -153,7 +151,7 @@
                   <tr>
                     <td>Startdatum</td>
                     <td>:</td>
-                    <td><input type='text' name='startdatum' value='<?php echo $row2['startdatum']?>' placeholder='yyyy-mm-dd'></td>
+                    <td><input id='date' type='date' name='startdatum' value='<?php echo $row2['startdatum']?>'></td>
                   </tr>
                   <tr>
                     <td>
@@ -161,7 +159,7 @@
                       <i>Na deze datum kan gebruiker systeem niet meer gebruiken</i>
                     </td>
                     <td>:</td>
-                    <td><input type='text' name='einddatum' value='<?php echo $row2['einddatum']?>' placeholder='yyyy-mm-dd'></td>
+                    <td><input id='date' type='date' name='einddatum' value='<?php echo $row2['einddatum']?>'></td></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -207,22 +205,23 @@
 
           echo "<table class='table table-hover'>";
 
-          echo "<form action='#' method='post'>";
           $vak_id = 0;
           while($row = $result->fetch_assoc())
           {
             $leerling_id = $row['leerling_id'];
+            echo "<form action='#' method='post'>";
 
 
             echo "<tr><td>";
             echo $row['firstname'];
             echo "</td><td>";
             echo $row['lastname'];
-            echo "</td><td><input type='submit' name='submit' value='$leerling_id'></td></tr>";
+            echo "  <input type='hidden' name='leerling_id' value='$leerling_id'>";
+            echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
 
+            echo "</form>";
 
           }
-          echo "</form>";
           echo "</table>";
           ?>
         </div>

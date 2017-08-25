@@ -68,11 +68,12 @@
                        VALUES ('$firstname','$lastname','$email','$password','$username')";
                   if ($conn->query($sql) === TRUE)
                   {
-                    echo "New record created successfully";
+                    echo "record is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
+                    echo '<meta http-equiv="refresh" content="2;url=index.php">';
                   }
                   else
                   {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
+                    //echo "Error: " . $sql . "<br>" . $conn->error;
                   }
 
 

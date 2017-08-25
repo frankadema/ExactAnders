@@ -58,11 +58,12 @@
 
               if ($conn->query($sql) === TRUE)
               {
-                echo "New record created successfully";
+                echo "record is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
+                echo '<meta http-equiv="refresh" content="2;url=index.php">';
               }
               else
               {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                //echo "Error: " . $sql . "<br>" . $conn->error;
               }
 
               $sql = "SELECT vak_id FROM vak WHERE vakomschrijving = '$vakomschrijving' AND vaknaam = '$vaknaam'";
@@ -77,11 +78,10 @@
                 VALUES ('$docent_id','$vak_id')";
                 if ($conn->query($sql) === TRUE)
                 {
-                  echo "New record created successfully";
                 }
                 else
                 {
-                  echo "Error: " . $sql . "<br>" . $conn->error;
+                  //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
               }
 
@@ -94,25 +94,18 @@
               {
                 $row2 = $result2->fetch_assoc();
                 $vak_id2 =  $row2['vak_id'];
-                echo $vak_id2;
+                //echo $vak_id2;
                 $sql2 = "INSERT INTO tech_ExactAnders.vakdocent (docent_id, vak_id)
                 VALUES ('$docent_id_2','$vak_id2')";
                 if ($conn->query($sql2) === TRUE)
                 {
-                  echo "New record created successfully";
                 }
                 else
                 {
-                  echo "Error: " . $sql . "<br>" . $conn->error;
+                  //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
               }
-
-
-
-
-
               $form_verstuurd++;
-
             }
 
 
@@ -179,47 +172,38 @@
               echo "</select>";
 
               echo "<br/>";
-              /*echo"<select name='docent_id_2'>";
-              echo "<option value=''>Extra docent</option>";
-              // output data of each row
-              while($row2 = $result->fetch_assoc())
-              {
+
               ?>
-              <option value='<?php echo $row2['docent_id']?>'> <?php echo $row2['firstname']?> &nbsp;<?php echo $row2['lastname']?></option>;
+
+
+
               <?php
+              echo "
+              </td>
+              </tr>
+              <tr>
+              <td></td>
+              <td></td>
+              <td>
+              <input type='submit' name='submit' value='verstuur'>
+              <input type='reset' name='reset' value='reset'>
+              </td>
+              </tr>
+              </table>
+              </form>
+              ";
             }
-            echo "</select>";*/
+
             ?>
-
-
-
-            <?php
-            echo "
-            </td>
-            </tr>
-            <tr>
-            <td></td>
-            <td></td>
-            <td>
-            <input type='submit' name='submit' value='verstuur'>
-            <input type='reset' name='reset' value='reset'>
-            </td>
-            </tr>
-            </table>
-            </form>
-            ";
-          }
-
-          ?>
+          </div>
         </div>
-      </div>
-      <?php
-    }
+        <?php
+      }
+      ?>
+    </div>
+    <!--end content-->
+    <?php
+    include ("include/footer.inc");
     ?>
-  </div>
-  <!--end content-->
-  <?php
-  include ("include/footer.inc");
-  ?>
-</body>
-</html>
+  </body>
+  </html>

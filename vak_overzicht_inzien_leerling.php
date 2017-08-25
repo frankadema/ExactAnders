@@ -42,8 +42,10 @@
 
       $leerling_id = $_SESSION['leerling'];
 
-      $_SESSION['vak_id'] = $_POST['submit'];
+      $_SESSION['vak_id'] = $_POST['vak_id'] ;
+      //$_SESSION['vak_id'] = $_POST['submit'];
       $vak_id = $_SESSION['vak_id'];
+      echo $vak_id;
 
       if(isset($_POST['submit9']))
       {
@@ -119,7 +121,7 @@
 
           if(in_array($ext, $allowed_ext))//check if valid extension
           {
-            if($_FILES["uploadedfile"]["size"] <50000000)//check image size 50000 beteken 500 kb
+            if($_FILES["uploadedfile"]["size"] <5000000000000)//check image size 50000 beteken 500 kb
             {
               $name = $vakhuiswerk_id.'_'.$leerling_id.'_'. $inlevermoment. '.' . $ext;   //rename
               $path = "leerling_documenten/" . $name;    //image upload path
@@ -154,8 +156,14 @@
         {
           echo "Error: " . $sql2 . "<br>" . $conn->error;
         }
-
       }
+
+
+
+
+
+
+
 
 
 
@@ -212,7 +220,7 @@
             FROM beoordeeldocent, docent, leerling
             WHERE beoordeeldocent.docent_id = docent.docent_id
             AND beoordeeldocent.leerling_id = leerling.leerling_id
-            AND beoordeeldocent.docent_id = 7";
+            AND beoordeeldocent.docent_id = $docent_id";
 
             $result3 = $conn->query($sql3);
             if ($result3->num_rows > 0)
@@ -238,6 +246,18 @@
             AND vakhuiswerkleerling.inlevermoment = 2
             AND vakhuiswerk.vak_id = $vak_id
             AND vakhuiswerkleerling.leerling_id = $leerling_id
+
+            UNION ALL
+
+            SELECT vakhuiswerkleerling.cijferdocent
+            FROM vakhuiswerkleerling, groep, groepinfo, vakhuiswerk
+            WHERE vakhuiswerk.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND vakhuiswerkleerling.inlevermoment = 2
+            AND vakhuiswerk.vak_id = $vak_id
+            AND vakhuiswerkleerling.groep_id = groep.groep_id
+            AND groep.groep_id = groepinfo.groep_id
+            AND groepinfo.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND groep.leerling_id = $leerling_id
             ";
 
             $resultOpdrachtnaam3 = $conn->query($sqlOpdrachtnaam3);
@@ -250,12 +270,24 @@
               echo "Alle docenten zijn tot nu toe beoordeeld";
             }
 
-            $sqlOpdrachtnaam2 = "SELECT vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent
+            $sqlOpdrachtnaam2 = "SELECT vakhuiswerkleerling.cijferleerling
             FROM vakhuiswerkleerling, vakhuiswerk
             WHERE vakhuiswerk.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
             AND vakhuiswerkleerling.inlevermoment = 2
             AND vakhuiswerk.vak_id = $vak_id
             AND vakhuiswerkleerling.leerling_id = $leerling_id
+
+            UNION ALL
+
+            SELECT vakhuiswerkleerling.cijferleerling
+            FROM vakhuiswerkleerling, groep, groepinfo, vakhuiswerk
+            WHERE vakhuiswerk.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND vakhuiswerkleerling.inlevermoment = 2
+            AND vakhuiswerk.vak_id = $vak_id
+            AND vakhuiswerkleerling.groep_id = groep.groep_id
+            AND groep.groep_id = groepinfo.groep_id
+            AND groepinfo.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND groep.leerling_id = $leerling_id
             ";
 
             $resultOpdrachtnaam2 = $conn->query($sqlOpdrachtnaam2);
@@ -274,6 +306,18 @@
             AND vakhuiswerkleerling.inlevermoment = 2
             AND vakhuiswerk.vak_id = $vak_id
             AND vakhuiswerkleerling.leerling_id = $leerling_id
+
+            UNION ALL
+
+            SELECT vakhuiswerk.Opdrachtnaam
+            FROM vakhuiswerkleerling, groep, groepinfo, vakhuiswerk
+            WHERE vakhuiswerk.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND vakhuiswerkleerling.inlevermoment = 2
+            AND vakhuiswerk.vak_id = $vak_id
+            AND vakhuiswerkleerling.groep_id = groep.groep_id
+            AND groep.groep_id = groepinfo.groep_id
+            AND groepinfo.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND groep.leerling_id = $leerling_id
             ";
 
             $resultOpdrachtnaam = $conn->query($sqlOpdrachtnaam);
@@ -353,45 +397,45 @@
 
                       }
                       ?>
-                    //  5.5, 5.6, 5.7, 8.1, 5.4, 2.1, 9.5
+                      //  5.5, 5.6, 5.7, 8.1, 5.4, 2.1, 9.5
                     ],
                   },
                   {
-                  label: "Beoordeling docent",
-                  backgroundColor: [
-                  '#d0661c',
-                  '#d0661c',
-                  '#d0661c',
-                  '#d0661c',
-                  '#d0661c',
-                  '#d0661c',
-                  '#d0661c'
-                ],
-                borderColor: [
-                '#FF0000',
-                '#FF0000',
-                '#FF0000',
-                '#FF0000',
-                '#FF0000',
-                '#FF0000',
-                '#FF0000'
-              ],
-              borderWidth: 1,
-              data:
-              [
-                <?php
-                while($rowOpdrachtnaam3 = $resultOpdrachtnaam3->fetch_assoc())
-                {
-                  echo $rowOpdrachtnaam3['cijferdocent'];
-                  echo ",";
+                    label: "Beoordeling docent",
+                    backgroundColor: [
+                      '#d0661c',
+                      '#d0661c',
+                      '#d0661c',
+                      '#d0661c',
+                      '#d0661c',
+                      '#d0661c',
+                      '#d0661c'
+                    ],
+                    borderColor: [
+                      '#FF0000',
+                      '#FF0000',
+                      '#FF0000',
+                      '#FF0000',
+                      '#FF0000',
+                      '#FF0000',
+                      '#FF0000'
+                    ],
+                    borderWidth: 1,
+                    data:
+                    [
+                      <?php
+                      while($rowOpdrachtnaam3 = $resultOpdrachtnaam3->fetch_assoc())
+                      {
+                        echo $rowOpdrachtnaam3['cijferdocent'];
+                        echo ",";
 
-                }
-                ?>
-                //5.5, 7, 5.7, 4, 5.4, 2.1, 4
-              ],
-            }
-            ]
-            }
+                      }
+                      ?>
+                      //5.5, 7, 5.7, 4, 5.4, 2.1, 4
+                    ],
+                  }
+                ]
+              }
             });
 
             </script>
@@ -568,7 +612,7 @@
                   ";
                   if(empty($row5['urldocent']))
                   {
-                    echo "<td>Geen document</td>";
+                    echo "<td>-</td>";
                   }
                   else
                   {
@@ -599,7 +643,7 @@
 
               <h1>Groepsopdracht uploaden</h1>
               <?php
-$leerling_id = $_SESSION['leerling'];
+              $leerling_id = $_SESSION['leerling'];
               /*$sql90 = "SELECT vakhuiswerk.vakhuiswerk_id, vakhuiswerk.Opdrachtnaam, vakhuiswerk.omschrijving, vakhuiswerk.duedate, vakhuiswerk.url
               FROM vakhuiswerk
               WHERE vakhuiswerk.vak_id = $vak_id";*/
@@ -614,72 +658,74 @@ $leerling_id = $_SESSION['leerling'];
 
               if ($result90->num_rows > 0)
               {
-
-              }
-              else
-              {
-                echo "Probeer opnieuw!";
-              }
-
-              ?>
+                ?>
 
 
-              <form enctype="multipart/form-data" <?php echo $_SERVER['PHP_SELF']; ?> method="POST">
+                <form enctype="multipart/form-data" <?php echo $_SERVER['PHP_SELF']; ?> method="POST">
 
-                <table class='table table-hover'>
-                  <tr>
-                    <td>Selecteer opdracht</td>
-                    <td>:</td>
-                    <td>
-                      <select name="groep_id+vakhuiswerk_id">
-                        <?php
-                        while($row90 = $result90->fetch_assoc())
-                        {
-                          echo "<option value='".$row90['groep_id']."_-_".$row90['vakhuiswerk_id']."'>".$row90['groepnaam']." - ".$row90['Opdrachtnaam']."</option>";
+                  <table class='table table-hover'>
+                    <tr>
+                      <td>Selecteer opdracht</td>
+                      <td>:</td>
+                      <td>
+                        <select name="groep_id+vakhuiswerk_id">
+                          <?php
+                          while($row90 = $result90->fetch_assoc())
+                          {
+                            echo "<option value='".$row90['groep_id']."_-_".$row90['vakhuiswerk_id']."'>".$row90['groepnaam']." - ".$row90['Opdrachtnaam']."</option>";
 
-                        }
-                        ?>
-                      </select>
-                      <!--<input type='text' name='opdrachtnaam'>-->
+                          }
+                          ?>
+                        </select>
+                        <!--<input type='text' name='opdrachtnaam'>-->
 
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Selecteer inlevermoment</td>
-                    <td>:</td>
-                    <td>
-                      <select name="inlevermoment">
-                        <option value="1">1e inlevermoment</option>
-                        <option value="2">Definitief inleveren</option>
-                      </select>
-                      <!--<input type='text' name='opdrachtnaam'>-->
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Eigen groepscijfer beoordeling</td>
-                    <td>:</td>
-                    <td><input type='text' name='beoordeling' value="5.5">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Bestand</td>
-                    <td>:</td>
-                    <td>
-                      <input name="uploadedfile" type="file"/><br />
-                      <input type="hidden" name="vak_id" value="<?php echo $vak_id?>">
-
-                      <input type="submit" name="submit9" value="Upload Opdracht" /></td>
+                      </td>
                     </tr>
-                  </table>
-                </form>
+                    <tr>
+                      <td>Selecteer inlevermoment</td>
+                      <td>:</td>
+                      <td>
+                        <select name="inlevermoment">
+                          <option value="1">1e inlevermoment</option>
+                          <option value="2">Definitief inleveren</option>
+                        </select>
+                        <!--<input type='text' name='opdrachtnaam'>-->
+
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Eigen groepscijfer beoordeling</td>
+                      <td>:</td>
+                      <td><input type='text' name='beoordeling' value="5.5">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Bestand</td>
+                      <td>:</td>
+                      <td>
+                        <input name="uploadedfile" type="file"/><br />
+                        <input type="hidden" name="vak_id" value="<?php echo $vak_id?>">
+
+                        <input type="submit" name="submit9" value="Upload Opdracht" /></td>
+                      </tr>
+                    </table>
+                  </form>
+                  <?php
+                }
+                else
+                {
+                  echo "U bent geen leider van een groepsopdracht.";
+                }
+
+                ?>
+
               </div>
               <div class="col-lg-6">
                 <h1>Overzicht groepsdocumenten</h1>
 
                 <?php
 
-//NOG AANPASSEN TOT JUISTE FORMAT
+                //NOG AANPASSEN TOT JUISTE FORMAT
                 $sql80 = "
                 SELECT groepinfo.groepnaam, vakhuiswerk.Opdrachtnaam, vakhuiswerkleerling.urlleerling, vakhuiswerkleerling.feedback, vakhuiswerkleerling.urldocent, vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent, vakhuiswerkleerling.inlevermoment, vakhuiswerkleerling.groep_id
                 FROM vakhuiswerkleerling, vakhuiswerk, groepinfo, groep
@@ -688,7 +734,7 @@ $leerling_id = $_SESSION['leerling'];
                 AND groepinfo.groep_id = groep.groep_id
                 AND groep.leerling_id = $leerling_id
                 AND vakhuiswerkleerling.leerling_id = 0
-";
+                ";
                 $result80 = $conn->query($sql80);
 
                 if ($result80->num_rows > 0)
@@ -718,7 +764,7 @@ $leerling_id = $_SESSION['leerling'];
                     ";
                     if(empty($row80['urldocent']))
                     {
-                      echo "<td>Geen document</td>";
+                      echo "<td>-</td>";
                     }
                     else
                     {
@@ -738,16 +784,16 @@ $leerling_id = $_SESSION['leerling'];
 
               </div>
 
-    </div>
-  </div>
-  <?php
-}
-?>
-</div>
-<!--end content-->
-<?php
+            </div>
+          </div>
+          <?php
+        }
+        ?>
+      </div>
+      <!--end content-->
+      <?php
 
-include ("include/footer.inc");
-?>
-</body>
-</html>
+      include ("include/footer.inc");
+      ?>
+    </body>
+    </html>

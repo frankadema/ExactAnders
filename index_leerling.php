@@ -31,6 +31,13 @@
         }
         else
         {
+
+          $leerling_id = $_SESSION['leerling'];
+
+          $sql = "SELECT leerling.firstname, leerling.lastname, leerling.email, leerling.username
+                  FROM leerling
+                  WHERE leerling.leerling_id = $leerling_id";
+          $result = $conn->query($sql);
         ?>
         <div class="row content">
           <div class="col-lg-12 center">
@@ -41,27 +48,57 @@
         <div class="row">
           <div class="col-lg-6">
           <div class="col-lg-12">
-            <h1>Leerlinginfo</h1>
-            <p>
-              Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />
-            </p>
+            <h1>Leerling</h1>
+
+              <table class='table table-hover'>
+                <?php
+                while($row = $result->fetch_assoc())
+                {
+                  $firstname = $row['firstname'];
+                  $lastname = $row['lastname'];
+                  $email= $row['email'];
+                  $username = $row['username'];
+
+
+                ?>
+                 <tr>
+                   <td>Gebruikersnaam</td>
+                   <td>:</td>
+                   <td><? echo $username;?></td>
+                 </tr>
+                 <tr>
+                   <td>Voornaam</td>
+                   <td>:</td>
+                   <td><? echo $firstname;?></td>
+                 </tr>
+                 <tr>
+                   <td>Achternaam</td>
+                   <td>:</td>
+                   <td><? echo $lastname;?></td>
+                 </tr>
+                 <tr>
+                   <td>E-mailadres</td>
+                   <td>:</td>
+                   <td><? echo $email;?></td>
+                 </tr>
+
+                 <?php
+                  }
+                 ?>
+               </table>
+
           </div>
         </div>
           <div class="col-lg-6">
 
             <div class="col-lg-12">
-              <h1>Grafiek</h1>
-              <img src="images/grafiek.png"/>
-            </div>
-            <div class="col-lg-12 ">
-              <h1>belangrijke punten</h1>
+              <h1>Informatie</h1>
               <p>
-                belangrijke punten<br />belangrijke punten<br />belangrijke punten<br />belangrijke punten<br />belangrijke punten<br />
-
-
-
+                In het menu hierboven kunt u wijzigingen doorvoeren en gegevens uitlezen binnen Exact Anders.
               </p>
+              <img src="https://learnbeat.nl/content/1-learnbeat/1-scholen/hondsrug-college/hondsrug-college.png"/>
             </div>
+
 
           </div>
 
