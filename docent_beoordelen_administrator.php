@@ -80,6 +80,26 @@
 
               }
 
+              $sqlCount = "SELECT COUNT(beoordeeldocent.leerling_id) AS count
+              FROM beoordeeldocent
+              WHERE beoordeeldocent.docent_id = $docent_id
+              ";
+
+              $resultCount = $conn->query($sqlCount);
+              if ($resultCount->num_rows > 0)
+              {
+
+              }
+              else
+              {
+
+              }
+              while($rowCount = $resultCount->fetch_assoc())
+              {
+                $rowCounter = $rowCount['count'];
+
+              }
+
               ?>
               <script>
 
@@ -109,8 +129,7 @@
                     <?php
                     while($rowBeoordeeldocent = $resultBeoordelenDocent->fetch_assoc())
                     {
-                      echo '"Leerling id : '.$rowBeoordeeldocent['docent_id'].'",';
-
+                      echo '"Leerling id : '.$rowBeoordeeldocent['leerling_id'].'",';
                     }
                     ?>
                   ],
@@ -119,22 +138,26 @@
 
                       label: "Beoordeling",
                       backgroundColor: [
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00'
+                        <?php
+                        for($teller = 1; $teller <= $rowCounter; $teller++)
+                        {
+                          ?>
+                          '#007e00',
+                          <?php
+                        }
+                        ?>
+
                       ],
                       borderColor: [
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000'
+                        <?php
+                        for($teller = 1; $teller <= $rowCounter; $teller++)
+                        {
+                          ?>
+                          '#FF0000',
+                          <?php
+                        }
+                        ?>
+
                       ],
                       borderWidth: 1,
                       data:
@@ -147,7 +170,6 @@
 
                         }
                         ?>
-                        //  5.5, 5.6, 5.7, 8.1, 5.4, 2.1, 9.5
                       ],
                     }
                   ]
@@ -156,6 +178,7 @@
 
               </script>
               <?php
+
               $sqlBeoordelenDocent3 = "SELECT beoordeeldocent.feedback, beoordeeldocent.leerling_id
               FROM beoordeeldocent
               WHERE beoordeeldocent.docent_id = $docent_id
@@ -207,25 +230,23 @@
 
             echo "<table class='table table-hover'>";
 
-            echo "<form action='#' method='post'>";
             $vak_id = 0;
             while($row = $result->fetch_assoc())
             {
+              //variable
               $vak_id = $row['vak_id'];
-
-
+              $docent_id = $row['docent_id'];
+              //form
+              echo "<form action='#' method='post'>";
               echo "<tr><td>";
-              //echo $row['vaknaam'];
               echo "</td><td>";
               echo $row['firstname']." ". $row['lastname'];
               echo "</td><td>";
-              $docent_id = $row['docent_id'];
-              echo "  <input type='hidden' name='docent_id' value='$docent_id'>";
+              echo " <input type='hidden' name='docent_id' value='$docent_id'>";
               echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
-
-
+              echo "</form>";
             }
-            echo "</form>";
+
             echo "</table>";
             ?>
 

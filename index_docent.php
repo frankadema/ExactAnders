@@ -15,63 +15,99 @@
   <link rel="stylesheet" href="css/normalize.css">
 
 </head>
-  <body>
-    <?php
-      include ("include/header.inc");
-    ?>
+<body>
+  <?php
+  include ("include/header.inc");
+  ?>
 
-    <!--content-->
-      <div class="container">
-        <?php
-          include ("include/menu.inc");
-          if(empty($_SESSION['docent']))
-          {
-            echo "Er iets fout gegaan, ga terug naar het begin scherm!";
-          }
-          else
-          {
-        ?>
-        <div class="row content">
-          <div class="col-lg-12 center">
-            <img src="images/green.png"/><img src="images/orange.png"/><img src="images/blue.png"/><img src="images/green.png"/><br /><img src="images/orange.png"/>
-            <img src="images/blue.png"/><img src="images/green.png"/><img src="images/orange.png"/><img src="images/blue.png"/><img src="images/green.png"/>
-          </div>
+  <!--content-->
+  <div class="container">
+    <?php
+    include ("include/menu.inc");
+    if(empty($_SESSION['docent']))
+    {
+      echo "Er iets fout gegaan, ga terug naar het begin scherm!";
+    }
+    else
+    {
+      $docent_id = $_SESSION['docent'];
+      $sql = "SELECT docent.firstname, docent.lastname, docent.email, docent.username
+      FROM docent
+      WHERE docent.docent_id = $docent_id";
+      $result = $conn->query($sql);
+      ?>
+      <div class="row content">
+        <div class="col-lg-12 center">
+          <?php
+          include ("include/vakkenDocent.inc");
+          ?>
         </div>
-        <div class="row">
-          <div class="col-lg-6">
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
           <div class="col-lg-12">
             <h1>DOCENT</h1>
+
+            <table class='table table-hover'>
+              <?php
+              while($row = $result->fetch_assoc())
+              {
+                $firstname = $row['firstname'];
+                $lastname = $row['lastname'];
+                $email= $row['email'];
+                $username = $row['username'];
+
+
+                ?>
+                <tr>
+                  <td>Gebruikersnaam</td>
+                  <td>:</td>
+                  <td><? echo $username;?></td>
+                </tr>
+                <tr>
+                  <td>Voornaam</td>
+                  <td>:</td>
+                  <td><? echo $firstname;?></td>
+                </tr>
+                <tr>
+                  <td>Achternaam</td>
+                  <td>:</td>
+                  <td><? echo $lastname;?></td>
+                </tr>
+                <tr>
+                  <td>E-mailadres</td>
+                  <td>:</td>
+                  <td><? echo $email;?></td>
+                </tr>
+
+                <?php
+              }
+              ?>
+            </table>
+
+          </div>
+        </div>
+        <div class="col-lg-6">
+
+          <div class="col-lg-12">
+            <h1>Informatie</h1>
             <p>
-              Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />Leerlinginfo<br />
+              In het menu hierboven kunt u wijzigingen doorvoeren en gegevens uitlezen binnen Exact Anders.
             </p>
-          </div>
-        </div>
-          <div class="col-lg-6">
-
-            <div class="col-lg-12">
-              <h1>Grafiek</h1>
-              <img src="images/grafiek.png"/>
-            </div>
-            <div class="col-lg-12 ">
-              <h1>belangrijke punten</h1>
-              <p>
-                belangrijke punten<br />belangrijke punten<br />belangrijke punten<br />belangrijke punten<br />belangrijke punten<br />
-
-
-
-              </p>
-            </div>
-
+            <img src="https://learnbeat.nl/content/1-learnbeat/1-scholen/hondsrug-college/hondsrug-college.png"/>
           </div>
 
+
         </div>
-        <?php
-      }
-        ?>
+
       </div>
-      <!--end content-->
       <?php
-        include ("include/footer.inc");
-      ?>
-  </body>
+    }
+    ?>
+  </div>
+  <!--end content-->
+  <?php
+  include ("include/footer.inc");
+  ?>
+</body>
 </html>

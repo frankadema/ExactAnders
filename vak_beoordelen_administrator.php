@@ -48,7 +48,7 @@
               <canvas id="lineChart" width="5%" height="5%"></canvas>
 
               <?php
-              $vak_id =  $_POST['submit'];
+              $vak_id =  $_POST['vak_id'];
 
 
 
@@ -79,6 +79,27 @@
               }
               else
               {
+
+              }
+
+              $sqlCount = "SELECT  COUNT(beoordeelvak.leerling_id) AS count
+              FROM beoordeelvak
+              WHERE beoordeelvak.vak_id = $vak_id
+              ";
+
+              $resultCount = $conn->query($sqlCount);
+              if ($resultCount->num_rows > 0)
+              {
+
+              }
+              else
+              {
+
+              }
+
+              while($rowCount = $resultCount->fetch_assoc())
+              {
+                $rowCounter = $rowCount['count'];
 
               }
 
@@ -121,22 +142,24 @@
 
                       label: "Beoordeling",
                       backgroundColor: [
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00',
-                        '#007e00'
+                        <?php
+                        for($teller = 1; $teller <= $rowCounter; $teller++)
+                        {
+                          ?>
+                          '#007e00',
+                          <?php
+                        }
+                        ?>
                       ],
                       borderColor: [
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000',
-                        '#FF0000'
+                        <?php
+                        for($teller = 1; $teller <= $rowCounter; $teller++)
+                        {
+                          ?>
+                          '#FF0000',
+                          <?php
+                        }
+                        ?>
                       ],
                       borderWidth: 1,
                       data:
@@ -213,23 +236,24 @@
 
             echo "<table class='table table-hover'>";
 
-            echo "<form action='#' method='post'>";
             $vak_id = 0;
             while($row = $result->fetch_assoc())
             {
+              //variables
               $vak_id = $row['vak_id'];
 
-
+              //form
+              echo "<form action='#' method='post'>";
               echo "<tr><td>";
               echo $row['vaknaam'];
               echo "</td><td>";
               echo $row['firstname']." ". $row['lastname'];
               echo "</td><td>";
-              echo "</td><td><input type='submit' name='submit' value='$vak_id'></td></tr>";
-
-
+              echo " <input type='hidden' name='vak_id' value='$vak_id'>";
+              echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
+              echo "</form>";
             }
-            echo "</form>";
+
             echo "</table>";
             ?>
 

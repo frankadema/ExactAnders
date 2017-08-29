@@ -41,11 +41,11 @@
 
 
       $leerling_id = $_SESSION['leerling'];
-
-      $_SESSION['vak_id'] = $_POST['vak_id'] ;
+      $_SESSION['vak_id'] = $_POST['vak_id'];
       //$_SESSION['vak_id'] = $_POST['submit'];
       $vak_id = $_SESSION['vak_id'];
-      echo $vak_id;
+
+      echo "<script type='text/javascript'> var leerlingID = $leerling_id; var vakID = $vak_id; </script>";
 
       if(isset($_POST['submit9']))
       {
@@ -100,7 +100,7 @@
         }
         else
         {
-          echo "Error: " . $sql2 . "<br>" . $conn->error;
+          //  echo "Error: " . $sql2 . "<br>" . $conn->error;
         }
 
       }
@@ -113,6 +113,28 @@
         $inlevermoment = $_POST['inlevermoment'];
         $beoordeling = $_POST['beoordeling'];
         $leerling_id = $_SESSION['leerling'];
+
+        print_r($_POST);
+
+
+        $sql20 = "SELECT vakhuiswerkleerling.vakhuiswerkleerling_id, vakhuiswerkleerling.vakhuiswerk_id, vakhuiswerkleerling.leerling_id, vakhuiswerkleerling.inlevermoment
+        FROM vakhuiswerkleerling
+        WHERE vakhuiswerkleerling.vakhuiswerk_id = $vakhuiswerk_id
+        AND vakhuiswerkleerling.leerling_id = $leerling_id
+        ";
+
+        $result20 = $conn->query($sql20);
+
+        if ($result20->num_rows > 0)
+        {
+          echo "Dtemp.";
+        }
+        else
+        {
+          echo "dtemp";
+        }
+
+
 
         if($_FILES["uploadedfile"]["name"] != '')//check if empty
         {
@@ -229,16 +251,8 @@
             }
             else
             {
-              echo "Alle docenten zijn tot nu toe beoordeeld";
+
             }
-
-
-
-
-
-
-
-
 
             $sqlOpdrachtnaam3 = "SELECT vakhuiswerkleerling.cijferdocent
             FROM vakhuiswerkleerling, vakhuiswerk
@@ -267,7 +281,7 @@
             }
             else
             {
-              echo "Alle docenten zijn tot nu toe beoordeeld";
+
             }
 
             $sqlOpdrachtnaam2 = "SELECT vakhuiswerkleerling.cijferleerling
@@ -297,7 +311,7 @@
             }
             else
             {
-              echo "Alle docenten zijn tot nu toe beoordeeld";
+
             }
 
             $sqlOpdrachtnaam = "SELECT vakhuiswerk.Opdrachtnaam
@@ -327,7 +341,44 @@
             }
             else
             {
-              echo "Alle docenten zijn tot nu toe beoordeeld";
+
+            }
+
+
+            $sqlCount = "SELECT  COUNT(vakhuiswerkleerling.cijferleerling) as count
+            FROM vakhuiswerkleerling, vakhuiswerk
+            WHERE vakhuiswerk.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND vakhuiswerkleerling.inlevermoment = 2
+            AND vakhuiswerk.vak_id = $vak_id
+            AND vakhuiswerkleerling.leerling_id = $leerling_id
+
+            UNION ALL
+
+            SELECT COUNT(vakhuiswerkleerling.cijferleerling) as count
+            FROM vakhuiswerkleerling, groep, groepinfo, vakhuiswerk
+            WHERE vakhuiswerk.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND vakhuiswerkleerling.inlevermoment = 2
+            AND vakhuiswerk.vak_id = $vak_id
+            AND vakhuiswerkleerling.groep_id = groep.groep_id
+            AND groep.groep_id = groepinfo.groep_id
+            AND groepinfo.vakhuiswerk_id = vakhuiswerkleerling.vakhuiswerk_id
+            AND groep.leerling_id = $leerling_id
+            ";
+
+            $resultCount = $conn->query($sqlCount);
+            if ($resultCount->num_rows > 0)
+            {
+
+            }
+            else
+            {
+
+            }
+
+            while($rowCount = $resultCount->fetch_assoc())
+            {
+              $rowCounter = $rowCount['count'];
+              $totalCounts = $totalCounts + $rowCounter;
             }
 
             ?>
@@ -369,22 +420,24 @@
 
                     label: "Beoordeling leerling",
                     backgroundColor: [
-                      '#007e00',
-                      '#007e00',
-                      '#007e00',
-                      '#007e00',
-                      '#007e00',
-                      '#007e00',
-                      '#007e00'
+                      <?php
+                      for($teller = 1; $teller <= $totalCounts; $teller++)
+                      {
+                        ?>
+                        '#007e00',
+                        <?php
+                      }
+                      ?>
                     ],
                     borderColor: [
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000'
+                      <?php
+                      for($teller = 1; $teller <= $totalCounts; $teller++)
+                      {
+                        ?>
+                        '#FF0000',
+                        <?php
+                      }
+                      ?>
                     ],
                     borderWidth: 1,
                     data:
@@ -403,22 +456,25 @@
                   {
                     label: "Beoordeling docent",
                     backgroundColor: [
-                      '#d0661c',
-                      '#d0661c',
-                      '#d0661c',
-                      '#d0661c',
-                      '#d0661c',
-                      '#d0661c',
-                      '#d0661c'
+                      <?php
+                      for($teller = 1; $teller <= $totalCounts; $teller++)
+                      {
+                        ?>
+                        '#d0661c',
+                        <?php
+                      }
+                      ?>
                     ],
                     borderColor: [
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000',
-                      '#FF0000'
+                      <?php
+                      for($teller = 1; $teller <= $totalCounts; $teller++)
+                      {
+                        ?>
+                        '#FF0000',
+                        <?php
+                      }
+                      ?>
+
                     ],
                     borderWidth: 1,
                     data:
@@ -476,15 +532,14 @@
                   </td>
                   <td>
                     <?php
-                    echo $row3['duedate'];
+                    $dateFormat = date_create($row3['duedate']);
+                    echo date_format($dateFormat, 'd-m-Y H:i:s');
+
                     ?>
                   </td>
                   <td>
                     <a href="vak_documenten/<?php echo $row3['url'];?>" target="_blank" class="btn btn-warning">
-                      <?php
-
-                      echo $row3['url'];
-                      ?>
+                      Bekijk
                     </a>
 
                   </td>
@@ -505,7 +560,7 @@
             <h1>Huiswerk uploaden</h1>
             <?php
 
-            $sql2 = "SELECT vakhuiswerk.vakhuiswerk_id, vakhuiswerk.Opdrachtnaam, vakhuiswerk.omschrijving, vakhuiswerk.duedate, vakhuiswerk.url
+            $sql2 = "SELECT vakhuiswerk.vakhuiswerk_id, vakhuiswerk.Opdrachtnaam, vakhuiswerk.omschrijving, vakhuiswerk.duedate, vakhuiswerk.url, vakhuiswerk.duedate
             FROM vakhuiswerk
             WHERE vakhuiswerk.vak_id = $vak_id";
 
@@ -526,11 +581,12 @@
             <form enctype="multipart/form-data" <?php echo $_SERVER['PHP_SELF']; ?> method="POST">
 
               <table class='table table-hover'>
-                <tr>
+                <tr id='hw-opdracht'>
                   <td>Selecteer opdracht</td>
                   <td>:</td>
                   <td>
-                    <select name="vakhuiswerk_id">
+                    <select id="hw-opdracht-select" name="vakhuiswerk_id">
+                      <option value='0'>Selecteer je opdracht</option>
                       <?php
                       while($row2 = $result2->fetch_assoc())
                       {
@@ -543,31 +599,121 @@
 
                   </td>
                 </tr>
-                <tr>
+                <tr id='hw-inlevermoment'>
                   <td>Selecteer inlevermoment</td>
                   <td>:</td>
                   <td>
-                    <select name="inlevermoment">
-                      <option value="1">1e inlevermoment</option>
-                      <option value="2">Definitief inleveren</option>
-                    </select>
+                    <input id="hw-inlevermoment-value" style="display:none;" name='inlevermoment' value="1" readonly="readonly"/>
+                    <div id='hw-inlevermoment-text'>1e inlevermoment</div>
                     <!--<input type='text' name='opdrachtnaam'>-->
 
                   </td>
                 </tr>
-                <tr>
+                <tr id='hw-cijfer'>
                   <td>Eigen cijfer beoordeling</td>
                   <td>:</td>
-                  <td><input type='text' name='beoordeling' value="5.5">
+                  <td>
+                    <select name="beoordeling">
+                      <option value="1.0">1.0</option>
+                      <option value="1.1">1.1</option>
+                      <option value="1.2">1.2</option>
+                      <option value="1.3">1.3</option>
+                      <option value="1.4">1.4</option>
+                      <option value="1.5">1.5</option>
+                      <option value="1.6">1.6</option>
+                      <option value="1.7">1.7</option>
+                      <option value="1.8">1.8</option>
+                      <option value="1.9">1.9</option>
+                      <option value="2.0">2.0</option>
+                      <option value="2.1">2.1</option>
+                      <option value="2.2">2.2</option>
+                      <option value="2.3">2.3</option>
+                      <option value="2.4">2.4</option>
+                      <option value="2.5">2.5</option>
+                      <option value="2.6">2.6</option>
+                      <option value="2.7">2.7</option>
+                      <option value="2.8">2.8</option>
+                      <option value="2.9">2.9</option>
+                      <option value="3.0">3.0</option>
+                      <option value="3.1">3.1</option>
+                      <option value="3.2">3.2</option>
+                      <option value="3.3">3.3</option>
+                      <option value="3.4">3.4</option>
+                      <option value="3.5">3.5</option>
+                      <option value="3.6">3.6</option>
+                      <option value="3.7">3.7</option>
+                      <option value="3.8">3.8</option>
+                      <option value="3.9">3.9</option>
+                      <option value="4.0">4.0</option>
+                      <option value="4.1">4.1</option>
+                      <option value="4.2">4.2</option>
+                      <option value="4.3">4.3</option>
+                      <option value="4.4">4.4</option>
+                      <option value="4.5">4.5</option>
+                      <option value="4.6">4.6</option>
+                      <option value="4.7">4.7</option>
+                      <option value="4.8">4.8</option>
+                      <option value="4.9">4.9</option>
+                      <option value="5.0">5.0</option>
+                      <option value="5.1">5.1</option>
+                      <option value="5.2">5.2</option>
+                      <option value="5.3">5.3</option>
+                      <option value="5.4">5.4</option>
+                      <option value="5.5">5.5</option>
+                      <option value="5.6">5.6</option>
+                      <option value="5.7">5.7</option>
+                      <option value="5.8">5.8</option>
+                      <option value="5.9">5.9</option>
+                      <option value="6.0">6.0</option>
+                      <option value="6.1">6.1</option>
+                      <option value="6.2">6.2</option>
+                      <option value="6.3">6.3</option>
+                      <option value="6.4">6.4</option>
+                      <option value="6.5">6.5</option>
+                      <option value="6.6">6.6</option>
+                      <option value="6.7">6.7</option>
+                      <option value="6.8">6.8</option>
+                      <option value="6.9">6.9</option>
+                      <option value="6.0">7.0</option>
+                      <option value="7.1">7.1</option>
+                      <option value="7.2">7.2</option>
+                      <option value="7.3">7.3</option>
+                      <option value="7.4">7.4</option>
+                      <option value="7.5">7.5</option>
+                      <option value="7.6">7.6</option>
+                      <option value="7.7">7.7</option>
+                      <option value="7.8">7.8</option>
+                      <option value="7.9">7.9</option>
+                      <option value="8.0">8.0</option>
+                      <option value="8.1">8.1</option>
+                      <option value="8.2">8.2</option>
+                      <option value="8.3">8.3</option>
+                      <option value="8.4">8.4</option>
+                      <option value="8.5">8.5</option>
+                      <option value="8.6">8.6</option>
+                      <option value="8.7">8.7</option>
+                      <option value="8.8">8.8</option>
+                      <option value="8.9">8.9</option>
+                      <option value="9.0">6.0</option>
+                      <option value="9.1">9.1</option>
+                      <option value="9.2">9.2</option>
+                      <option value="9.3">9.3</option>
+                      <option value="9.4">9.4</option>
+                      <option value="9.5">9.5</option>
+                      <option value="9.6">9.6</option>
+                      <option value="9.7">9.7</option>
+                      <option value="9.8">9.8</option>
+                      <option value="9.9">9.9</option>
+                      <option value="10.0">10.0</option>
+                    </select>
                   </td>
                 </tr>
-                <tr>
+                <tr id='hw-bestand'>
                   <td>Bestand</td>
                   <td>:</td>
                   <td>
                     <input name="uploadedfile" type="file"/><br />
                     <input type="hidden" name="vak_id" value="<?php echo $vak_id?>">
-
                     <input type="submit" name="submit2" value="Upload Opdracht" /></td>
                   </tr>
                 </table>
@@ -617,7 +763,7 @@
                   else
                   {
                     echo"
-                    <td><a href='leerling_documenten/".$row5['urldocent']."' target='_blank' class='btn btn-warning' >".$row5['urldocent']."</a></td>
+                    <td><a href='leerling_documenten/".$row5['urldocent']."' target='_blank' class='btn btn-warning' >Bekijk</a></td>
                     ";
                   }
                   echo "
@@ -668,7 +814,8 @@
                       <td>Selecteer opdracht</td>
                       <td>:</td>
                       <td>
-                        <select name="groep_id+vakhuiswerk_id">
+                        <select id='gw-opdracht-select' name="groep_id+vakhuiswerk_id">
+                          <option value='0'>Selecteer een opdracht</option>
                           <?php
                           while($row90 = $result90->fetch_assoc())
                           {
@@ -681,119 +828,212 @@
 
                       </td>
                     </tr>
-                    <tr>
+                    <tr id='gw-inlevermoment'>
                       <td>Selecteer inlevermoment</td>
                       <td>:</td>
                       <td>
-                        <select name="inlevermoment">
-                          <option value="1">1e inlevermoment</option>
-                          <option value="2">Definitief inleveren</option>
-                        </select>
-                        <!--<input type='text' name='opdrachtnaam'>-->
+                        <input id="gw-inlevermoment-value" style="display:none;" name='inlevermomen' value="1" readonly="readonly"/>
+                        <div id='gw-inlevermoment-text'>1e inlevermoment</dig>
+                          <!--<input type='text' name='opdrachtnaam'>-->
 
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Eigen groepscijfer beoordeling</td>
-                      <td>:</td>
-                      <td><input type='text' name='beoordeling' value="5.5">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Bestand</td>
-                      <td>:</td>
-                      <td>
-                        <input name="uploadedfile" type="file"/><br />
-                        <input type="hidden" name="vak_id" value="<?php echo $vak_id?>">
-
-                        <input type="submit" name="submit9" value="Upload Opdracht" /></td>
+                        </td>
                       </tr>
-                    </table>
-                  </form>
-                  <?php
-                }
-                else
-                {
-                  echo "U bent geen leider van een groepsopdracht.";
-                }
+                      <tr id='gw-cijfer'>
+                        <td>Eigen groepscijfer beoordeling</td>
+                        <td>:</td>
+                        <td>
+                          <select name="beoordeling">
+                            <option value="1.0">1.0</option>
+                            <option value="1.1">1.1</option>
+                            <option value="1.2">1.2</option>
+                            <option value="1.3">1.3</option>
+                            <option value="1.4">1.4</option>
+                            <option value="1.5">1.5</option>
+                            <option value="1.6">1.6</option>
+                            <option value="1.7">1.7</option>
+                            <option value="1.8">1.8</option>
+                            <option value="1.9">1.9</option>
+                            <option value="2.0">2.0</option>
+                            <option value="2.1">2.1</option>
+                            <option value="2.2">2.2</option>
+                            <option value="2.3">2.3</option>
+                            <option value="2.4">2.4</option>
+                            <option value="2.5">2.5</option>
+                            <option value="2.6">2.6</option>
+                            <option value="2.7">2.7</option>
+                            <option value="2.8">2.8</option>
+                            <option value="2.9">2.9</option>
+                            <option value="3.0">3.0</option>
+                            <option value="3.1">3.1</option>
+                            <option value="3.2">3.2</option>
+                            <option value="3.3">3.3</option>
+                            <option value="3.4">3.4</option>
+                            <option value="3.5">3.5</option>
+                            <option value="3.6">3.6</option>
+                            <option value="3.7">3.7</option>
+                            <option value="3.8">3.8</option>
+                            <option value="3.9">3.9</option>
+                            <option value="4.0">4.0</option>
+                            <option value="4.1">4.1</option>
+                            <option value="4.2">4.2</option>
+                            <option value="4.3">4.3</option>
+                            <option value="4.4">4.4</option>
+                            <option value="4.5">4.5</option>
+                            <option value="4.6">4.6</option>
+                            <option value="4.7">4.7</option>
+                            <option value="4.8">4.8</option>
+                            <option value="4.9">4.9</option>
+                            <option value="5.0">5.0</option>
+                            <option value="5.1">5.1</option>
+                            <option value="5.2">5.2</option>
+                            <option value="5.3">5.3</option>
+                            <option value="5.4">5.4</option>
+                            <option value="5.5">5.5</option>
+                            <option value="5.6">5.6</option>
+                            <option value="5.7">5.7</option>
+                            <option value="5.8">5.8</option>
+                            <option value="5.9">5.9</option>
+                            <option value="6.0">6.0</option>
+                            <option value="6.1">6.1</option>
+                            <option value="6.2">6.2</option>
+                            <option value="6.3">6.3</option>
+                            <option value="6.4">6.4</option>
+                            <option value="6.5">6.5</option>
+                            <option value="6.6">6.6</option>
+                            <option value="6.7">6.7</option>
+                            <option value="6.8">6.8</option>
+                            <option value="6.9">6.9</option>
+                            <option value="6.0">7.0</option>
+                            <option value="7.1">7.1</option>
+                            <option value="7.2">7.2</option>
+                            <option value="7.3">7.3</option>
+                            <option value="7.4">7.4</option>
+                            <option value="7.5">7.5</option>
+                            <option value="7.6">7.6</option>
+                            <option value="7.7">7.7</option>
+                            <option value="7.8">7.8</option>
+                            <option value="7.9">7.9</option>
+                            <option value="8.0">8.0</option>
+                            <option value="8.1">8.1</option>
+                            <option value="8.2">8.2</option>
+                            <option value="8.3">8.3</option>
+                            <option value="8.4">8.4</option>
+                            <option value="8.5">8.5</option>
+                            <option value="8.6">8.6</option>
+                            <option value="8.7">8.7</option>
+                            <option value="8.8">8.8</option>
+                            <option value="8.9">8.9</option>
+                            <option value="9.0">6.0</option>
+                            <option value="9.1">9.1</option>
+                            <option value="9.2">9.2</option>
+                            <option value="9.3">9.3</option>
+                            <option value="9.4">9.4</option>
+                            <option value="9.5">9.5</option>
+                            <option value="9.6">9.6</option>
+                            <option value="9.7">9.7</option>
+                            <option value="9.8">9.8</option>
+                            <option value="9.9">9.9</option>
+                            <option value="10.0">10.0</option>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr id='gw-bestand'>
+                        <td>Bestand</td>
+                        <td>:</td>
+                        <td>
+                          <input name="uploadedfile" type="file"/><br />
+                          <input type="hidden" name="vak_id" value="<?php echo $vak_id?>">
 
-                ?>
-
-              </div>
-              <div class="col-lg-6">
-                <h1>Overzicht groepsdocumenten</h1>
-
-                <?php
-
-                //NOG AANPASSEN TOT JUISTE FORMAT
-                $sql80 = "
-                SELECT groepinfo.groepnaam, vakhuiswerk.Opdrachtnaam, vakhuiswerkleerling.urlleerling, vakhuiswerkleerling.feedback, vakhuiswerkleerling.urldocent, vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent, vakhuiswerkleerling.inlevermoment, vakhuiswerkleerling.groep_id
-                FROM vakhuiswerkleerling, vakhuiswerk, groepinfo, groep
-                WHERE vakhuiswerkleerling.vakhuiswerk_id = vakhuiswerk.vakhuiswerk_id
-                AND vakhuiswerkleerling.groep_id = groepinfo.groep_id
-                AND groepinfo.groep_id = groep.groep_id
-                AND groep.leerling_id = $leerling_id
-                AND vakhuiswerkleerling.leerling_id = 0
-                ";
-                $result80 = $conn->query($sql80);
-
-                if ($result80->num_rows > 0)
-                {
-
-                }
-                else
-                {
-                  echo "Probeer opnieuw2";
-                }
-                ?>
-
-                <table class='table table-hover'>
-                  <tr>
-                    <td><h4>Opdrachtnaam</h4></td>
-                    <td><h4>feedback inzien</h4></td>
-                    <td><h4>Feedback</h4></td>
-                    <td><h4>Groep</h4></td>
-                    <td><h4>Docent</h4></td>
-                  </tr>
-                  <?php
-                  while($row80 = $result80->fetch_assoc())
+                          <input type="submit" name="submit9" value="Upload Opdracht" /></td>
+                        </tr>
+                      </table>
+                    </form>
+                    <?php
+                  }
+                  else
                   {
-                    //echo "<tr><td>".$row5['Opdrachtnaam']."</td><td><a href='leerling_documenten/".$row5['urlleerling']."'target="_blank"/>".$row5['urlleerling']."</a></td><td>".$row5['feedback']."</td><td>".$row5['cijferleerling']."</td><td>".$row5['cijferdocent']."</td></tr>";
-                    echo "<tr>
-                    <td>".$row80['groepnaam']." - ".$row80['Opdrachtnaam']."</td>
-                    ";
-                    if(empty($row80['urldocent']))
-                    {
-                      echo "<td>-</td>";
-                    }
-                    else
-                    {
-                      echo"
-                      <td><a href='groep_documenten/".$row80['urldocent']."' target='_blank' class='btn btn-warning' >".$row80['urldocent']."</a></td>
-                      ";
-                    }
-                    echo "
-                    <td>".$row80['feedback']."</td>
-                    <td>".$row80['cijferleerling']."</td>
-                    <td>".$row80['cijferdocent']."</td>
-                    </tr>";
+                    echo "U bent geen leider van een groepsopdracht.";
+                  }
+
+                  ?>
+
+                </div>
+                <div class="col-lg-6">
+                  <h1>Overzicht groepsdocumenten</h1>
+
+                  <?php
+
+                  //NOG AANPASSEN TOT JUISTE FORMAT
+                  $sql80 = "
+                  SELECT groepinfo.groepnaam, vakhuiswerk.Opdrachtnaam, vakhuiswerkleerling.urlleerling, vakhuiswerkleerling.feedback, vakhuiswerkleerling.urldocent, vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent, vakhuiswerkleerling.inlevermoment, vakhuiswerkleerling.groep_id
+                  FROM vakhuiswerkleerling, vakhuiswerk, groepinfo, groep
+                  WHERE vakhuiswerkleerling.vakhuiswerk_id = vakhuiswerk.vakhuiswerk_id
+                  AND vakhuiswerkleerling.groep_id = groepinfo.groep_id
+                  AND groepinfo.groep_id = groep.groep_id
+                  AND groep.leerling_id = $leerling_id
+                  AND vakhuiswerkleerling.leerling_id = 0
+                  ";
+                  $result80 = $conn->query($sql80);
+
+                  if ($result80->num_rows > 0)
+                  {
+
+                  }
+                  else
+                  {
+                    echo "Probeer opnieuw2";
                   }
                   ?>
-                </table>
 
+                  <table class='table table-hover'>
+                    <tr>
+                      <td><h4>Opdrachtnaam</h4></td>
+                      <td><h4>feedback inzien</h4></td>
+                      <td><h4>Feedback</h4></td>
+                      <td><h4>Groep</h4></td>
+                      <td><h4>Docent</h4></td>
+                    </tr>
+                    <?php
+                    while($row80 = $result80->fetch_assoc())
+                    {
+                      //echo "<tr><td>".$row5['Opdrachtnaam']."</td><td><a href='leerling_documenten/".$row5['urlleerling']."'target="_blank"/>".$row5['urlleerling']."</a></td><td>".$row5['feedback']."</td><td>".$row5['cijferleerling']."</td><td>".$row5['cijferdocent']."</td></tr>";
+                      echo "<tr>
+                      <td>".$row80['groepnaam']." - ".$row80['Opdrachtnaam']."</td>
+                      ";
+                      if(empty($row80['urldocent']))
+                      {
+                        echo "<td>-</td>";
+                      }
+                      else
+                      {
+                        echo"
+                        <td><a href='groep_documenten/".$row80['urldocent']."' target='_blank' class='btn btn-warning' >Bekijk</a></td>
+                        ";
+                      }
+                      echo "
+                      <td>".$row80['feedback']."</td>
+                      <td>".$row80['cijferleerling']."</td>
+                      <td>".$row80['cijferdocent']."</td>
+                      </tr>";
+                    }
+                    ?>
+                  </table>
+
+
+                </div>
 
               </div>
-
             </div>
-          </div>
-          <?php
-        }
-        ?>
-      </div>
-      <!--end content-->
-      <?php
+            <?php
+          }
+          ?>
+        </div>
+        <!--end content-->
+        <?php
 
-      include ("include/footer.inc");
-      ?>
-    </body>
-    </html>
+        include ("include/footer.inc");
+        ?>
+      </body>
+      </html>
+
+      <script src="js/select-forms.js"></script>

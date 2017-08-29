@@ -45,7 +45,7 @@
     }
     $vak_id = $_SESSION['vak_id']*/
     //$vak_id   = $_POST['submit'];
-    $_SESSION['vak_id'] = $_POST['submit'];
+    $_SESSION['vak_id'] = $_POST['vak_id'];
     $vak_id = $_SESSION['vak_id'];
     //  $_SESSION['vak_id'] = $vak_id;
     //$vak_id = $_SESSION['vak_id'] ;

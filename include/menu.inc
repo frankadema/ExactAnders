@@ -185,7 +185,7 @@ if(isset($_POST['submit']))
     $password = hash('sha256', $salt.$password);//sha256
 
     $password = hash('sha256', $salt.$password);
-    echo $password;
+    
     $sql = "SELECT docent_id, firstname, lastname, username FROM docent WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE() - 1) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >0 LIMIT 1";
     $result = $conn->query($sql);
 
