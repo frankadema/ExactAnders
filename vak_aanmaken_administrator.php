@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -41,7 +50,7 @@
           {
             if(empty($_POST['vaknaam']) OR empty($_POST['vakomschrijving']) OR empty($_POST['docent_id']))
             {
-              echo "<h3>Vul de gegevens compleet in </h3>";
+              echo "Vul de gegevens compleet in.";
               echo "<FORM><INPUT Type='button' VALUE='terug naar invoerscherm' onClick='history.go(-1);return true;'></FORM>";
               $form_verstuurd++;
             }
@@ -58,11 +67,12 @@
 
               if ($conn->query($sql) === TRUE)
               {
-                echo "record is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
-                echo '<meta http-equiv="refresh" content="2;url=index.php">';
+                echo "Vak is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
+                echo '<meta http-equiv="refresh" content="2;url=vak_aanmaken_administrator.php">';
               }
               else
               {
+                echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";
                 //echo "Error: " . $sql . "<br>" . $conn->error;
               }
 
@@ -78,9 +88,11 @@
                 VALUES ('$docent_id','$vak_id')";
                 if ($conn->query($sql) === TRUE)
                 {
+
                 }
                 else
                 {
+                  echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";
                   //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
               }
@@ -102,6 +114,7 @@
                 }
                 else
                 {
+                  echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";
                   //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
               }
@@ -121,11 +134,11 @@
               <tr>
               <td>Vaknaam</td>
               <td>:</td>
-              <td><input type='text' name='vaknaam'></td>
+              <td><input type='text' name='vaknaam' class='form-control'></td>
               </tr><tr>
               <td>Korte Omschrijving</td>
               <td>:</td>
-              <td><input type='text' name='vakomschrijving'></td>
+              <td><input type='text' name='vakomschrijving' class='form-control'></td>
               </tr>
               <tr>
               <td>Docent</td>
@@ -161,7 +174,7 @@
               ?>
 
               <?php
-              echo "<select name='docent_id'>";
+              echo "<select name='docent_id' class='form-control'>";
               // output data of each row
               while($row = $result2->fetch_assoc())
               {

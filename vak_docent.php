@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -17,12 +26,14 @@
 </head>
 <body>
   <?php
+  //header
   include ("include/header.inc");
   ?>
 
   <!--content-->
   <div class="container">
     <?php
+    //menu
     include ("include/menu.inc");
     if(empty($_SESSION['docent']))
     {
@@ -34,6 +45,7 @@
       <div class="row content">
         <div class="col-lg-12 center">
           <?php
+          //include tegelstructuur van specifieke docent uit database
           include ("include/vakkenDocent.inc");
           ?>
         </div>
@@ -99,6 +111,7 @@
   </div>
   <!--end content-->
   <?php
+  //footer
   include ("include/footer.inc");
   ?>
 </body>

@@ -1,5 +1,12 @@
 <?
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
 
+//sessie starten in api
 session_start();
 $servername = "localhost";
 $username = "tech_ExactAnders";
@@ -14,14 +21,11 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-// $leerlingID = $_POST['leerling_id'];
-// $vakID = $_POST['vak_id'];
-// $vakHuiswerkID = $_POST['vak_huiswerk_id'];
-
+//variabelen
 $leerlingID = $_POST['leerling_id'];
 $vakID = $_POST['vak_id'];
-//$vakHuiswerkID = $_POST['vak_huiswerk_id'];
 
+//geneste waarde van vak_id en huiswerk_id van elkaar scheiden
 $nested = explode("_-_", $_POST['vak_huiswerk_id']);
 $groep_id = $nested[0];
 $vakHuiswerkID = $nested[1];
@@ -37,20 +41,18 @@ AND vakhuiswerk.vak_id = $vakID
 AND vakhuiswerkleerling.vakhuiswerk_id = $vakHuiswerkID
 AND vakhuiswerkleerling.groep_id = $groep_id";
 
-
-
-
-
-
 $result23 = $conn->query($sql23);
 
+//array aanmaken
 $arrayToFill = array();
 
+//array vullen
 while($rowCount = $result23->fetch_assoc())
 {
   $arrayToFill[] = $rowCount;
 }
 
+//lengte array
 $length = count($arrayToFill);
 
 if($length === 0){

@@ -585,7 +585,7 @@
                   <td>Selecteer opdracht</td>
                   <td>:</td>
                   <td>
-                    <select id="hw-opdracht-select" name="vakhuiswerk_id">
+                    <select id="hw-opdracht-select" name="vakhuiswerk_id" class='form-control'>
                       <option value='0'>Selecteer je opdracht</option>
                       <?php
                       while($row2 = $result2->fetch_assoc())
@@ -603,7 +603,7 @@
                   <td>Selecteer inlevermoment</td>
                   <td>:</td>
                   <td>
-                    <input id="hw-inlevermoment-value" style="display:none;" name='inlevermoment' value="1" readonly="readonly"/>
+                    <input id="hw-inlevermoment-value" style="display:none;" name='inlevermoment' value="1" readonly="readonly" class='form-control'/>
                     <div id='hw-inlevermoment-text'>1e inlevermoment</div>
                     <!--<input type='text' name='opdrachtnaam'>-->
 
@@ -613,7 +613,7 @@
                   <td>Eigen cijfer beoordeling</td>
                   <td>:</td>
                   <td>
-                    <select name="beoordeling">
+                    <select name="beoordeling" class='form-control'>
                       <option value="1.0">1.0</option>
                       <option value="1.1">1.1</option>
                       <option value="1.2">1.2</option>
@@ -712,7 +712,7 @@
                   <td>Bestand</td>
                   <td>:</td>
                   <td>
-                    <input name="uploadedfile" type="file"/><br />
+                    <input name="uploadedfile" type="file" class='form-control-file'/><br />
                     <input type="hidden" name="vak_id" value="<?php echo $vak_id?>">
                     <input type="submit" name="submit2" value="Upload Opdracht" /></td>
                   </tr>

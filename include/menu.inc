@@ -1,4 +1,12 @@
 <?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+//connectie met database opzetten
 include ("include/connect.inc");
 ?>
 <!--menu-->
@@ -6,7 +14,7 @@ include ("include/connect.inc");
   <div class="col-lg-12">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- Mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -17,10 +25,12 @@ include ("include/connect.inc");
 
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Links -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <?php
+            //gebruiker = docent + eigen menustructuur
+            //check als sessie van docent gevuld is
             if(!empty($_SESSION['docent']))
             {
               ?>
@@ -35,6 +45,8 @@ include ("include/connect.inc");
               <li><a href="leerling_info_inzien_docent.php">Leerlingen</a></li>
               <?php
             }
+            //gebruiker = leerling + eigen menustructuur
+            //check als sessie van leerling gevuld is
             if(!empty($_SESSION['leerling']))
             {
               ?>
@@ -50,6 +62,8 @@ include ("include/connect.inc");
               </li>
               <?php
             }
+            //gebruiker = administrator + eigen menustructuur
+            //check als sessie van administrator gevuld is
             if(!empty($_SESSION['administrator']))
             {
               ?>
@@ -95,8 +109,13 @@ include ("include/connect.inc");
               <?php
             }
 
+            //gebruiker = geen van allen ingelogd, basispagina + eigen menustructuur
+            // in dit menu kan worden ingelogd als leerling, docent en administrator.
+            // leerling inloggen gaat verder op regel:       169
+            // docent inloggen gaat verder op regel:         203
+            // administrator inloggen gaat verder op regel:  238
 
-            /*if($_SESSION['leerling'] == "")*/
+            //check als sessies nog leeg zijn
             if(empty($_SESSION['docent'] || $_SESSION['leerling'] || $_SESSION['administrator']))
             {
               ?>
@@ -117,21 +136,29 @@ include ("include/connect.inc");
               </li>
               <?php
             }
+            //Als leerling, docent of administrator zijn ingelogd keuze geven om uit te loggen.
             if(!empty($_SESSION['docent']) || !empty($_SESSION['leerling']) || !empty($_SESSION['administrator']))
             {
+              //Als op knop uitloggen is geklikt wordt de sessie geleegd en is het niet meer mogelijk om zonder opnieuw in te loggen gebruik te kunnen maken van het systeem.
               if(isset($_POST['uitloggen']))
               {
+                //sessie opheven
                 session_destroy();
-                header( "refresh:0;url=index.php" );
+                //doorsturen naar startpagina van Exact Anders.
+                /*header( "refresh:1;url=index.php" );
+                header( "refresh:0;url=index.php" );*/
+                ?>
+                <script language="javascript">
+                window.location.href = "index.php"
+                </script>
+                <?php
               }
               ?>
-
-              <form method="post"  action"<?php echo $_SERVER['PHP_SELF']; ?>" class="navbar-form navbar-left" role="login">
+              <form method="post" action"<?php echo $_SERVER['PHP_SELF']; ?>" class="navbar-form navbar-left" role="login">
                 <button type="submit" name="uitloggen" class="btn btn-default">Uitloggen</button>
               </form>
               <?php
             }
-
             ?>
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -142,9 +169,10 @@ include ("include/connect.inc");
 <!--menu-end-->
 
 <?php
-
+//als er een gebruikersnaam + wachtwoord + gebruikersrol wordt ingevoerd en gekozen worden hier de keuzmomenten uitgevoerd voor leerling, docent en administrator.
 if(isset($_POST['submit']))
 {
+  //als gebruiker leerling is
   $type = $_POST['usertype'];
   if($type == 1)
   {
@@ -153,7 +181,7 @@ if(isset($_POST['submit']))
     $salt = "L_E_E_R_L_I_N_G-10#exactanders";
     //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
     $password = hash('sha256', $salt.$password);//sha256
-
+    // dubbele hash om het kraken van wachtwoord te minimaliseren.
     $password = hash('sha256', $salt.$password);
 
     $sql = "SELECT leerling_id, firstname, lastname, username FROM leerling WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE() - 1) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >0 LIMIT 1";
@@ -161,20 +189,24 @@ if(isset($_POST['submit']))
 
     if ($result->num_rows > 0)
     {
-      // output data of each row
+      //output
       while($row = $result->fetch_assoc())
       {
-        //echo "id: " . $row["leerling_id"]. " - naam: " . $row["firstname"]. " " . $row["lastname"]. " ". $row['username']. "<br/>";
         echo "U wordt doorgestuurd.";
+        //sessie leerling vullen.
         $_SESSION['leerling'] = $row['leerling_id'];
+        //doorsturen.
         header( "refresh:0;url=index_leerling.php" );
       }
     }
     else
     {
+      //als inloggen niet werkt
       echo "Probeer opnieuw of neem contact op met de administrator van dit systeem.";
     }
   }
+
+  //als gebruiker docent is
   if($type == 2)
   {
     $username = $_POST['username'];
@@ -183,58 +215,62 @@ if(isset($_POST['submit']))
     $salt = "D_O_C_E_N_T-10#exactanders";
     //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
     $password = hash('sha256', $salt.$password);//sha256
-
+    // dubbele hash om het kraken van wachtwoord te minimaliseren.
     $password = hash('sha256', $salt.$password);
-    
+
     $sql = "SELECT docent_id, firstname, lastname, username FROM docent WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE() - 1) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >0 LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)
     {
-      // output data of each row
+      // output d
       while($row = $result->fetch_assoc())
       {
-        //echo "id: " . $row["docent_id"]. " - naam: " . $row["firstname"]. " " . $row["lastname"]. " ". $row['username']. "<br/>";
         echo "U wordt doorgestuurd.";
+        //sessie docent vullen.
         $_SESSION['docent'] = $row['docent_id'];
+        //doorsturen
         header( "refresh:0;url=index_docent.php" );
 
       }
     }
     else
     {
+      //als inloggen niet lukt.
       echo "Probeer opnieuw of neem contact op met de administrator van dit systeem.";
     }
   }
+
+  //als gebruiker administrator is
   if($type == 3)
   {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-
     $salt = "A_D_M_I_N_I_S_T_A_T_O_R-10#exactanders";
     //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
     $password = hash('sha256', $salt.$password);//sha256
-
+    //dubbele hash + salt
     $password = hash('sha256', $salt.$password);
-
 
     $sql = "SELECT administrator_id, firstname, lastname, username FROM administrator WHERE username = '$username' AND password = '$password' LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)
     {
-      // output data of each row
+      // output
       while($row = $result->fetch_assoc())
       {
-        //echo "id: " . $row["administrator_id"]. " - naam: " . $row["firstname"]. " " . $row["lastname"]. " ". $row['username']. "<br/>";
         echo "U wordt doorgestuurd.";
+        //sessie administrator vullen
         $_SESSION['administrator'] = $row['administrator_id'];
+        //doorsturen naar pagina.
         header( "refresh:0;url=index_administrator.php" );
       }
     }
     else
     {
+      //fout bij inloggen.
       echo "Probeer opnieuw of neem contact op met de administrator van dit systeem.";
     }
   }

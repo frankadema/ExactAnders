@@ -1,3 +1,12 @@
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+// moments.js wordt gebruikt voor grafieken
+
 //! moment.js
 //! version : 2.18.1
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors

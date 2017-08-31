@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -74,7 +83,7 @@
                 }
                 else
                 {
-                  echo"fout";
+                  echo"Er is iets fout gegaan neem contact op met de administrator";
                   //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
               }
@@ -83,18 +92,15 @@
 
               if ($conn->query($sql3) === TRUE)
               {
-                echo "record is aangepast aan database, u wordt terug getstuurd naar de startpagina";
-                echo '<meta http-equiv="refresh" content="2;url=index.php">';
+                echo "leerling is aangepast aan database, u wordt terug getstuurd naar de startpagina";
+                echo '<meta http-equiv="refresh" content="2;url=leerling_aanpassen_administrator.php">';
               }
               else
               {
-                echo"fout";
+                echo"Er is iets fout gegaan neem contact op met de administrator";
                 //  echo "Error: " . $sql . "<br>" . $conn->error;
               }
-
-
               $form_verstuurd++;
-
             }
           }
 
@@ -113,12 +119,10 @@
             }
             else
             {
-              echo "Probeer opnieuw!";
+              echo"Er is iets fout gegaan neem contact op met de administrator";
             }
             while($row2 = $result2->fetch_assoc())
             {
-
-
               ?>
               <form action='#' method='post'>
                 <table class='table table-hover'>
@@ -126,32 +130,32 @@
                   <tr>
                     <td>Gebruikersnaam</td>
                     <td>:</td>
-                    <td><input type='text' name='username' value='<?php echo $row2['username']?>'></td>
+                    <td><input type='text' name='username' value='<?php echo $row2['username']?>' class='form-control'></td>
                   </tr>
                   <tr>
-                    <td>Evenueel nieuw wachtwoord</td>
+                    <td>Eventueel nieuw wachtwoord</td>
                     <td>:</td>
-                    <td><input type='password' name='password'></td>
+                    <td><input type='password' name='password' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Voornaam</td>
                     <td>:</td>
-                    <td><input type='text' name='firstname' value='<?php echo $row2['firstname']?>'></td>
+                    <td><input type='text' name='firstname' value='<?php echo $row2['firstname']?>' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Achternaam</td>
                     <td>:</td>
-                    <td><input type='text' name='lastname' value='<?php echo $row2['lastname']?>'></td>
+                    <td><input type='text' name='lastname' value='<?php echo $row2['lastname']?>' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>E-mailadres (Hondsrug College)</td>
                     <td>:</td>
-                    <td><input type='text' name='mail' value='<?php echo $row2['email']?>'></td>
+                    <td><input type='text' name='mail' value='<?php echo $row2['email']?>' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Startdatum</td>
                     <td>:</td>
-                    <td><input id='date' type='date' name='startdatum' value='<?php echo $row2['startdatum']?>'></td>
+                    <td><input id='date' type='date' name='startdatum' value='<?php echo $row2['startdatum']?>' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>
@@ -159,7 +163,7 @@
                       <i>Na deze datum kan gebruiker systeem niet meer gebruiken</i>
                     </td>
                     <td>:</td>
-                    <td><input id='date' type='date' name='einddatum' value='<?php echo $row2['einddatum']?>'></td></td>
+                    <td><input id='date' type='date' name='einddatum' value='<?php echo $row2['einddatum']?>' class='form-control'></td></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -168,7 +172,7 @@
                     <td></td>
                     <td></td>
                     <td>
-                      <input type='submit' name='submit2' value='aanpassen'>
+                      <input type='submit' name='submit2' value='aanpassen' class='btn btn-warning'>
 
                     </td>
                   </tr>
@@ -177,17 +181,6 @@
               </form>
               <?php
             }
-
-
-
-
-
-
-
-
-
-
-
           }
 
           $sql = "SELECT leerling.leerling_id, leerling.firstname, leerling.lastname, leerling.startdatum, leerling.einddatum
@@ -200,7 +193,7 @@
           }
           else
           {
-            echo "Probeer opnieuw";
+            echo"Er is iets fout gegaan neem contact op met de administrator";
           }
 
           echo "<table class='table table-hover'>";
@@ -210,17 +203,13 @@
           {
             $leerling_id = $row['leerling_id'];
             echo "<form action='#' method='post'>";
-
-
             echo "<tr><td>";
             echo $row['firstname'];
             echo "</td><td>";
             echo $row['lastname'];
             echo "  <input type='hidden' name='leerling_id' value='$leerling_id'>";
             echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
-
             echo "</form>";
-
           }
           echo "</table>";
           ?>
@@ -232,6 +221,7 @@
   </div>
   <!--end content-->
   <?php
+  //footer
   include ("include/footer.inc");
   ?>
 </body>

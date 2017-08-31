@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -65,21 +74,16 @@
 
                     $password = hash('sha256', $salt.$password);
 
-
-
                     $sql = "INSERT INTO tech_ExactAnders.leerling (firstname, lastname, email, password, username, startdatum, einddatum)
                        VALUES ('$firstname','$lastname','$email','$password','$username', '$startdatum', '$einddatum')";
                   if ($conn->query($sql) === TRUE)
                   {
-                    echo "record is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
-                    echo '<meta http-equiv="refresh" content="2;url=index.php">';
+                    echo "Gebruiker is toegevoegd aan database, u wordt terug getstuurd naar de startpagina";
+                    echo '<meta http-equiv="refresh" content="2;url=leerling_aanmaken_administrator.php">';
                   }
                   else
                   {
-                    echo "Fout neem contact op met de beheerder";
-                  }
-
-
+                  echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";                  }
                   $form_verstuurd++;
                 }
                 else
@@ -88,10 +92,7 @@
                   echo "<FORM><INPUT Type='button' VALUE='terug naar invoerscherm' onClick='history.go(-1);return true;'></FORM>";
                 }
               }
-
-
             }
-
             ?>
             <form action"<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
             <?php
@@ -102,42 +103,42 @@
                   <tr>
                     <td>Gebruikersnaam</td>
                     <td>:</td>
-                    <td><input type='text' name='username'></td>
+                    <td><input type='text' name='username' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Wachtwoord</td>
                     <td>:</td>
-                    <td><input type='password' name='password'></td>
+                    <td><input type='password' name='password' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Wachtwoord (herhalen)</td>
                     <td>:</td>
-                    <td><input type='password' name='password2'></td>
+                    <td><input type='password' name='password2' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Voornaam</td>
                     <td>:</td>
-                    <td><input type='text' name='firstname'></td>
+                    <td><input type='text' name='firstname' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Achternaam</td>
                     <td>:</td>
-                    <td><input type='text' name='lastname'></td>
+                    <td><input type='text' name='lastname' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>E-mailadres (Hondsrug College)</td>
                     <td>:</td>
-                    <td><input type='text' name='mail' value='...@hondsrugcollege.nl'></td>
+                    <td><input type='text' name='mail' value='...@hondsrugcollege.nl' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Startdatum</td>
                     <td>:</td>
-                    <td><input id='date' type='date' name='startdatum' ></td>
+                    <td><input id='date' type='date' name='startdatum' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Einddatum</td>
                     <td>:</td>
-                    <td><input id='date' type='date' name='einddatum' ></td>
+                    <td><input id='date' type='date' name='einddatum' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -146,8 +147,8 @@
                     <td></td>
                     <td></td>
                     <td>
-                      <input type='submit' name='submit' value='verstuur'>
-                      <input type='reset' name='reset' value='reset'>
+                      <input type='submit' name='submit' value='verstuur' class='btn btn-warning'>
+                      <input type='reset' name='reset' value='reset' class='btn btn-warning'>
                     </td>
                   </tr>
               </table>
@@ -164,6 +165,7 @@
       </div>
       <!--end content-->
       <?php
+        //footer
         include ("include/footer.inc");
       ?>
   </body>

@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -41,7 +50,7 @@
           {
             if(empty($_POST['vaknaam']))
             {
-              echo "<h3>Vul de gegevens compleet in </h3>";
+              echo "Vul de gegevens compleet in.";
               echo "<FORM><INPUT Type='button' VALUE='terug naar invoerscherm' onClick='history.go(-1);return true;'></FORM>";
               $form_verstuurd++;
             }
@@ -60,11 +69,13 @@
 
               if ($conn->query($sql3) === TRUE)
               {
-                echo "record is aangepast aan database";
+                echo "Vak is aangepast aan database";
+                //echo '<meta http-equiv="refresh" content="2;url=vak_aanpassen_administrator.php">';
               }
               else
               {
-                echo"fout";
+                echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";
+
                 //  echo "Error: " . $sql . "<br>" . $conn->error;
               }
 
@@ -72,11 +83,12 @@
 
               if ($conn->query($sql4) === TRUE)
               {
-                echo "record is aangepast aan database";
+                //echo "Vak is aangepast aan database";
+                echo '<meta http-equiv="refresh" content="2;url=vak_aanpassen_administrator.php">';
               }
               else
               {
-                echo"fout";
+                echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";
                 //echo "Error: " . $sql . "<br>" . $conn->error;
               }
 
@@ -115,12 +127,12 @@
                   <tr>
                     <td>Vaknaam</td>
                     <td>:</td>
-                    <td><input type='text' name='vaknaam' value='<?php echo $row2['vaknaam']?>'></td>
+                    <td><input type='text' name='vaknaam' value='<?php echo $row2['vaknaam']?>' class='form-control'></td>
                   </tr>
 
                   <td>vakomschrijving</td>
                   <td>:</td>
-                  <td><textarea class="form-control" name="vakomschrijving" rows="4" cols="100%"><?php echo $row2['vakomschrijving'];?></textarea></td>
+                  <td><textarea class="form-control" name="vakomschrijving" rows="4" cols="100%" class='form-control'><?php echo $row2['vakomschrijving'];?></textarea></td>
                 </tr>
                 <tr>
                   <td>Docent</td>
@@ -141,7 +153,7 @@
                     }
                     ?>
 
-                    <select name='docent_id'>";
+                    <select name='docent_id' class='form-control'>";
                       <?php
                       while($row3 = $result3->fetch_assoc())
                       {
@@ -163,7 +175,7 @@
                   <td></td>
                   <td></td>
                   <td>
-                    <input type='submit' name='submit2' value='aanpassen'>
+                    <input type='submit' name='submit2' value='aanpassen' class='btn btn-warning'>
 
                   </td>
                 </tr>

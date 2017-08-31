@@ -1,9 +1,21 @@
+/*
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+*/
+
+/*achtergrond*/
 body
 {
   background: url("../images/lined_paper.png");
   color: #000000;
 }
 
+/*header blauwe balk*/
 .header
 {
   background: url("../images/header.png");
@@ -39,11 +51,12 @@ a:active {
   color: #ffffff;
 }
 
-
 .center
 {
   text-align: center;
 }
+
+/*container waar content inkomt*/
 .container
 {
   margin-top: 5px;
@@ -53,10 +66,10 @@ a:active {
 
 .content
 {
-
   color: #000000;
 }
 
+/*footer grijze balk*/
 .footer
 {
   position: fixed;
@@ -68,22 +81,26 @@ a:active {
   width: 100%;
 }
 
-
+/*opmaak h1 t/m h6*/
 h1, h2, h3, h4, h5, h6
 {
   color: #d0661c;
 }
 
+/*opmaak h4*/
 h4
 {
   font-weight: bold;
 }
 
+/*opmaak tabel*/
 table, tr, td
 {
   color: #000000;
 }
 
+
+/*tegelopbouw blauw*/
 .tegelBlue
 {
   background-image: url("../images/blue.png");
@@ -100,6 +117,8 @@ table, tr, td
   width: 123px;
   height: 121px;
 }
+
+/*tegelopbouw oranje*/
 .tegelOrange
 {
   background-image: url("../images/orange.png");
@@ -116,6 +135,8 @@ table, tr, td
   width: 123px;
   height: 121px;
 }
+
+/*tegelopbouw groen*/
 .tegelGreen
 {
   background-image: url("../images/green.png");

@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -23,8 +32,10 @@
   <!--content-->
   <div class="container">
     <?php
+    //include menu
     include ("include/menu.inc");
 
+    //keuze sessie gevuld.
     if(empty($_SESSION['administrator']))
     {
       echo "Er iets fout gegaan, ga terug naar het begin scherm!";
@@ -37,18 +48,18 @@
 
           <h1>Docent aanpassen</h1>
           <?php
-          //update record docent
+          //Update gegevens
           if(isset($_POST['submit2']))
           {
             if(empty($_POST['username']) OR empty($_POST['mail']) OR empty($_POST['firstname']) OR empty($_POST['lastname']) )
             {
-              echo "<h3>Vul de gegevens compleet in </h3>";
+              echo "Vul de gegevens compleet in ";
               echo "<FORM><INPUT Type='button' VALUE='terug naar invoerscherm' onClick='history.go(-1);return true;'></FORM>";
               $form_verstuurd++;
             }
             else
             {
-
+              //variabelen
               $docent_id = $_POST['docent_id'];
               $firstname = $_POST['firstname'];
               $lastname = $_POST['lastname'];
@@ -64,7 +75,7 @@
                 $salt = "D_O_C_E_N_T-10#exactanders";
                 //salt password (username en email mogen niet veranderd worden tijdens gebruik van systeem)
                 $password = hash('sha256', $salt.$password);//sha256
-
+                //dubbele hash + Salt
                 $password = hash('sha256', $salt.$password);
 
                 $sql4 = "UPDATE docent SET password = '$password' WHERE docent.docent_id = '$docent_id'";
@@ -72,11 +83,13 @@
                 if ($conn->query($sql4) === TRUE)
                 {
                   echo "Wachtwoord is aangepast<br />";
+                  echo '<meta http-equiv="refresh" content="2;url=docent_aanpassen_administrator.php">';
+
                 }
                 else
                 {
-                  echo"fout";
-                  echo "Error: " . $sql . "<br>" . $conn->error;
+                  echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";
+                  //echo "Error: " . $sql . "<br>" . $conn->error;
                 }
               }
 
@@ -85,20 +98,18 @@
               if ($conn->query($sql3) === TRUE)
               {
                 echo "record is aangepast aan database, u wordt terug getstuurd naar de startpagina";
-                echo '<meta http-equiv="refresh" content="2;url=index.php">';              }
+                echo '<meta http-equiv="refresh" content="2;url=docent_aanpassen_administrator.php">';
+              }
               else
               {
-                echo"fout";
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                echo"Er is iets fout gegaan, neem contact op met de administrator van dit systeem.";
+                //echo "Error: " . $sql . "<br>" . $conn->error;
               }
-
-
               $form_verstuurd++;
-
             }
           }
 
-          //fill selected docent
+          //vullen gekozen docent
           if(isset($_POST['submit']))
           {
 
@@ -118,8 +129,6 @@
             }
             while($row2 = $result2->fetch_assoc())
             {
-
-
               ?>
               <form action='#' method='post'>
                 <table class='table table-hover'>
@@ -127,33 +136,33 @@
                   <tr>
                     <td>Gebruikersnaam</td>
                     <td>:</td>
-                    <td><input type='text' name='username' value='<?php echo $row2['username']?>'></td>
+                    <td><input type='text' name='username' value='<?php echo $row2['username']?>' class='form-control'></td>
                   </tr>
                   <tr>
-                    <td>Evenueel nieuw wachtwoord</td>
+                    <td>Eventueel nieuw wachtwoord</td>
                     <td>:</td>
-                    <td><input type='password' name='password'></td>
+                    <td><input type='password' name='password' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Voornaam</td>
                     <td>:</td>
-                    <td><input type='text' name='firstname' value='<?php echo $row2['firstname']?>'></td>
+                    <td><input type='text' name='firstname' value='<?php echo $row2['firstname']?>' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Achternaam</td>
                     <td>:</td>
-                    <td><input type='text' name='lastname' value='<?php echo $row2['lastname']?>'></td>
+                    <td><input type='text' name='lastname' value='<?php echo $row2['lastname']?>' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>E-mailadres (Hondsrug College)</td>
                     <td>:</td>
-                    <td><input type='text' name='mail' value='<?php echo $row2['email']?>'></td>
+                    <td><input type='text' name='mail' value='<?php echo $row2['email']?>' class='form-control'></td>
                   </tr>
                   <tr>
                     <td>Startdatum</td>
                     <td>:</td>
                     <td>
-                      <input id='date' type='date' name='startdatum' value='<?php echo $row2['startdatum']?>'></td>
+                      <input id='date' type='date' name='startdatum' value='<?php echo $row2['startdatum']?>' class='form-control'></td>
                     </tr>
                     <tr>
                       <td>
@@ -161,7 +170,7 @@
                         <i>Na deze datum kan gebruiker systeem niet meer gebruiken</i>
                       </td>
                       <td>:</td>
-                      <td><input id='date' type='date' name='einddatum' value='<?php echo $row2['einddatum']?>'></td></td>
+                      <td><input id='date' type='date' name='einddatum' value='<?php echo $row2['einddatum']?>' class='form-control'></td></td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
@@ -170,8 +179,7 @@
                       <td></td>
                       <td></td>
                       <td>
-                        <input type='submit' name='submit2' value='aanpassen'>
-
+                        <input type='submit' name='submit2' value='aanpassen' class="btn btn-warning">
                       </td>
                     </tr>
                   </table>
@@ -181,7 +189,7 @@
               }
             }
 
-            //all docents
+            //Alle docenten
             $sql = "SELECT docent.docent_id, docent.firstname, docent.lastname, docent.startdatum, docent.einddatum
             FROM docent";
             $result = $conn->query($sql);
@@ -192,14 +200,14 @@
             }
             else
             {
-              echo "Probeer opnieuw";
+              echo "Er is iets fout gegaan neem contact op met de administrator van dit systeem";
             }
 
             echo "<table class='table table-hover'>";
 
 
             $vak_id = 0;
-            //all users docent
+            //alle gebruikers met docentrol
             while($row = $result->fetch_assoc())
             {
               $docent_id = $row['docent_id'];
@@ -212,9 +220,7 @@
               echo "  <input type='hidden' name='docent_id' value='$docent_id'>";
               echo "</td><td><input type='submit' name='submit' value='verder' class='btn btn-warning'></td></tr>";
               echo "</form>";
-
             }
-
             echo "</table>";
             ?>
           </div>
@@ -225,6 +231,7 @@
     </div>
     <!--end content-->
     <?php
+    //footer
     include ("include/footer.inc");
     ?>
   </body>

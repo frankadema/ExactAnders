@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -23,8 +32,10 @@
   <!--content-->
   <div class="container">
     <?php
+    //include menu
     include ("include/menu.inc");
 
+    //sessie check
     if(empty($_SESSION['leerling']))
     {
       echo "Er iets fout gegaan, ga terug naar het begin scherm!";
@@ -42,6 +53,7 @@
       <div class="row content">
         <div class="col-lg-12 center">
           <?php
+          //includen tegelstructuur
           include ("include/vakkenLeerling.inc");
           ?>
         </div>
@@ -53,6 +65,7 @@
 
             <table class='table table-hover'>
               <?php
+              //vullen gegevens leerling
               while($row = $result->fetch_assoc())
               {
                 $firstname = $row['firstname'];
@@ -97,7 +110,7 @@
             <p>
               In het menu hierboven kunt u wijzigingen doorvoeren en gegevens uitlezen binnen Exact Anders.
             </p>
-            <img src="https://learnbeat.nl/content/1-learnbeat/1-scholen/hondsrug-college/hondsrug-college.png"/>
+            <img src="images/hondsrug-college.png"/>
           </div>
 
 
@@ -110,6 +123,7 @@
   </div>
   <!--end content-->
   <?php
+  //close footer
   include ("include/footer.inc");
   ?>
 </body>

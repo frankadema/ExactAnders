@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -26,7 +35,7 @@
     <?php
     //include menu
     include ("include/menu.inc");
-    //check if role is admin
+    //check als sessie is adminsitrator
     if(empty($_SESSION['administrator']))
     {
       echo "Er iets fout gegaan, ga terug naar het begin scherm!";
@@ -36,10 +45,12 @@
       //variable
       $administrator_id = $_SESSION['administrator'];
 
-      //show current admin
+      //toon huidige administrator
       $sql = "SELECT administrator.firstname, administrator.lastname, administrator.email, administrator.username
       FROM administrator
       WHERE administrator.administrator_id = $administrator_id";
+
+      //variable uitkomst
       $result = $conn->query($sql);
       ?>
 
@@ -50,14 +61,13 @@
 
             <table class='table table-hover'>
               <?php
+              //geeft alle informatie weer wat uitkomst is van query op regel 49
               while($row = $result->fetch_assoc())
               {
                 $firstname = $row['firstname'];
                 $lastname = $row['lastname'];
                 $email= $row['email'];
                 $username = $row['username'];
-
-
                 ?>
                 <tr>
                   <td>Gebruikersnaam</td>
@@ -94,7 +104,7 @@
             <p>
               In het menu hierboven kunt u wijzigingen doorvoeren en gegevens uitlezen binnen Exact Anders.
             </p>
-            <img src="https://learnbeat.nl/content/1-learnbeat/1-scholen/hondsrug-college/hondsrug-college.png"/>
+            <img src="images/hondsrug-college.png"/>
           </div>
 
 
@@ -107,7 +117,7 @@
   </div>
   <!--end content-->
   <?php
-
+  //footer include
   include ("include/footer.inc");
   ?>
 </body>

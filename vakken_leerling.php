@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+//  Frank Adema
+//  Student Stenden Emmen
+//  frank.adema@student.stenden.com
+//  leerlingnummer: 277665
+//  Jaar: 2017
+//  Afstudeeropdracht Exact Anders
+
+?>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -17,14 +26,16 @@
 </head>
 <body>
   <?php
+  //include header
   include ("include/header.inc");
   ?>
 
   <!--content-->
   <div class="container">
     <?php
+    //indlcue menu
     include ("include/menu.inc");
-
+    //sessie check
     if(empty($_SESSION['leerling']))
     {
       echo "Er iets fout gegaan, ga terug naar het begin scherm!";
@@ -61,15 +72,14 @@
               echo "Probeer opnieuw";
             }
             echo "<table class='table table-hover'>";
-            echo "<tr><td><h4>Vaknaam</h4></td><td><h4>Vaknummer</h4></td></tr>";
+            echo "<tr><td><h4>Vaknaam</h4></td><td></td></tr>";
 
             $vak_id = 0;
+            //output gegevens uit database
             while($row = $result->fetch_assoc())
             {
               echo "<form action='vak_overzicht_inzien_leerling.php' method='post'>";
               $vak_id = $row['vak_id'];
-
-              //  echo "<input type='hidden' name='vak_id' value='$vak_id'>";
               echo "<tr><td>";
               echo $row['vaknaam'];
 
@@ -93,9 +103,6 @@
             <p>
               Lever altijd de opdrachten online aan<br />
               Voer groepsopdrachten als groep uit en niet individueel<br />
-
-
-
             </p>
           </div>
 
@@ -108,6 +115,7 @@
   </div>
   <!--end content-->
   <?php
+  //footer end
   include ("include/footer.inc");
   ?>
 </body>
