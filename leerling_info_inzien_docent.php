@@ -48,7 +48,7 @@
           <div class="col-lg-6">
             <h1>Leerling overzicht</h1>
             <?php
-
+            $docent_id = $_SESSION['docent'];
             if(isset($_POST['submit2']))
             {
               //grafiek maken en vullen
@@ -358,18 +358,18 @@
               }
               else
               {
-                echo "Probeer opnieuw";
+                echo "Probeer opnieuw2";
               }
 
             }
 
-
+            //echo $docent_id;
             $sql = "SELECT leerling.leerling_id, leerling.firstname, leerling.lastname, vak.vaknaam, vak.vak_id
             FROM vakleerling, leerling, vak, docent, vakdocent
             WHERE leerling.leerling_id =vakleerling.leerling_id
             AND vakleerling.vak_id = vak.vak_id
             AND vak.vak_id = vakdocent.vak_id
-            AND vakdocent.docent_id = 10
+            AND vakdocent.docent_id = $docent_id
             GROUP BY leerling.firstname, leerling.lastname
             ORDER BY leerling.firstname, leerling.lastname ASC
             ";
@@ -381,7 +381,7 @@
             }
             else
             {
-              echo "Probeer opnieuw";
+              echo "geen beoordelingen";
             }
 
             echo "<table class='table table-hover'>";

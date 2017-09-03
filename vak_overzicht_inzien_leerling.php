@@ -55,6 +55,7 @@
         $nested = explode("_-_", $_POST['groep_id+vakhuiswerk_id']);
         $groep_id = $nested[0];
         $vakhuiswerk_id = $nested[1];
+        $inleverDate = date("Y-m-d H:i:s");
 
         $inlevermoment = $_POST['inlevermoment'];
         $beoordeling = $_POST['beoordeling'];
@@ -67,14 +68,30 @@
 
           if(in_array($ext, $allowed_ext))//check if valid extension
           {
-            if($_FILES["uploadedfile"]["size"] <50000000)//check image size 50000 beteken 500 kb
+            //grote van bestand.
+            if($_FILES["uploadedfile"]["size"] <30000000)//check image size 50000 beteken 500 kb
             {
               $name = $groep_id.'_'. $inlevermoment. '.' . $ext;   //rename
               $path = "groep_documenten/" . $name;    //image upload path
               move_uploaded_file($_FILES["uploadedfile"]["tmp_name"], $path);
-              echo "file is online";
 
-              //  echo $name;
+
+
+              $sql4 = "INSERT INTO tech_ExactAnders.vakhuiswerkleerling  (vakhuiswerk_id, groep_id, vak_id, inlevermoment, cijferleerling, urlleerling, inleverDatum)
+              VALUES ('$vakhuiswerk_id', '$groep_id', '$vak_id', '$inlevermoment', '$beoordeling', '$name', '$inleverDate')";
+              if ($conn->query($sql4) === TRUE)
+              {
+                echo "Bestand is verwerkt in het systeem, je wordt doorgestuurd naar de vakkenpagina.";
+                echo "<meta http-equiv='refresh' content='3; url=vakken_leerling.php'>";
+
+              }
+              else
+              {
+                echo "Er is een fout opgetreden, neem contact op met de beheerder van het systeem.";
+                //echo "Error: " . $sql2 . "<br>" . $conn->error;
+              }
+
+
             }
             else
             {
@@ -92,16 +109,7 @@
           echo '<script>alert("selecteer file")</script>';
         }
 
-        $sql4 = "INSERT INTO tech_ExactAnders.vakhuiswerkleerling  (vakhuiswerk_id, groep_id, vak_id, inlevermoment, cijferleerling, urlleerling)
-        VALUES ('$vakhuiswerk_id', '$groep_id', '$vak_id', '$inlevermoment', '$beoordeling', '$name')";
-        if ($conn->query($sql4) === TRUE)
-        {
-          echo "New record created successfully";
-        }
-        else
-        {
-          //  echo "Error: " . $sql2 . "<br>" . $conn->error;
-        }
+
 
       }
 
@@ -113,9 +121,7 @@
         $inlevermoment = $_POST['inlevermoment'];
         $beoordeling = $_POST['beoordeling'];
         $leerling_id = $_SESSION['leerling'];
-
-        print_r($_POST);
-
+        $inleverDate = date("Y-m-d H:i:s");
 
         $sql20 = "SELECT vakhuiswerkleerling.vakhuiswerkleerling_id, vakhuiswerkleerling.vakhuiswerk_id, vakhuiswerkleerling.leerling_id, vakhuiswerkleerling.inlevermoment
         FROM vakhuiswerkleerling
@@ -127,15 +133,14 @@
 
         if ($result20->num_rows > 0)
         {
-          echo "Dtemp.";
+
         }
         else
         {
-          echo "dtemp";
+
         }
 
-
-
+        //upload file
         if($_FILES["uploadedfile"]["name"] != '')//check if empty
         {
           $allowed_ext = array("pdf");//types
@@ -143,14 +148,28 @@
 
           if(in_array($ext, $allowed_ext))//check if valid extension
           {
-            if($_FILES["uploadedfile"]["size"] <5000000000000)//check image size 50000 beteken 500 kb
+            //max 3 mb
+            if($_FILES["uploadedfile"]["size"] <30000000)//check image size 50000 beteken 500 kb
             {
               $name = $vakhuiswerk_id.'_'.$leerling_id.'_'. $inlevermoment. '.' . $ext;   //rename
               $path = "leerling_documenten/" . $name;    //image upload path
               move_uploaded_file($_FILES["uploadedfile"]["tmp_name"], $path);
-              echo "file is online";
+              //echo "Bestand is verstuurd";
 
-              //  echo $name;
+
+              $sql4 = "INSERT INTO tech_ExactAnders.vakhuiswerkleerling  (vakhuiswerk_id, leerling_id, vak_id, inlevermoment, cijferleerling, urlleerling, inleverDatum)
+              VALUES ('$vakhuiswerk_id', '$leerling_id', '$vak_id', '$inlevermoment', '$beoordeling', '$name', '$inleverDate')";
+              if ($conn->query($sql4) === TRUE)
+              {
+                echo "Bestand is verwerkt in het systeem, je wordt doorgestuurd naar de vakkenpagina.";
+                echo "<meta http-equiv='refresh' content='3; url=vakken_leerling.php'>";
+
+              }
+              else
+              {
+                echo "Er is een fout opgetreden, neem contact op met de beheerder van het systeem.";
+                //echo "Error: " . $sql2 . "<br>" . $conn->error;
+              }
             }
             else
             {
@@ -168,25 +187,8 @@
           echo '<script>alert("selecteer file")</script>';
         }
 
-        $sql4 = "INSERT INTO tech_ExactAnders.vakhuiswerkleerling  (vakhuiswerk_id, leerling_id, vak_id, inlevermoment, cijferleerling, urlleerling)
-        VALUES ('$vakhuiswerk_id', '$leerling_id', '$vak_id', '$inlevermoment', '$beoordeling', '$name')";
-        if ($conn->query($sql4) === TRUE)
-        {
-          echo "New record created successfully";
-        }
-        else
-        {
-          echo "Error: " . $sql2 . "<br>" . $conn->error;
-        }
+
       }
-
-
-
-
-
-
-
-
 
 
       $sql = "SELECT vak.vak_id, vak.vaknaam, vak.vakomschrijving
@@ -204,12 +206,13 @@
       }
       else
       {
-        echo "Probeer opnieuw";
+
       }
       $row = $result->fetch_assoc();
 
-
+      //tonen opdrachten
       ?>
+
       <div class="row">
         <div class="col-lg-12">
           <div class="col-lg-12">
@@ -217,10 +220,7 @@
             <h1><?php echo $row['vaknaam'];?></h1>
 
             <p>
-
               <?php echo $row['vakomschrijving'];?><br />
-
-
             </p>
 
           </div>
@@ -381,6 +381,7 @@
               $totalCounts = $totalCounts + $rowCounter;
             }
 
+            //grafieken opbouwen
             ?>
             <script>
 
@@ -487,7 +488,6 @@
 
                       }
                       ?>
-                      //5.5, 7, 5.7, 4, 5.4, 2.1, 4
                     ],
                   }
                 ]
@@ -510,7 +510,7 @@
             }
             else
             {
-              echo "Probeer opnieuw";
+
             }
 
             ?>
@@ -572,7 +572,7 @@
             }
             else
             {
-              echo "Probeer opnieuw!";
+
             }
 
             ?>
@@ -585,7 +585,7 @@
                   <td>Selecteer opdracht</td>
                   <td>:</td>
                   <td>
-                    <select id="hw-opdracht-select" name="vakhuiswerk_id" class='form-control'>
+                    <select id="hw-opdracht-select" name="vakhuiswerk_id" class="form-control">
                       <option value='0'>Selecteer je opdracht</option>
                       <?php
                       while($row2 = $result2->fetch_assoc())
@@ -674,7 +674,7 @@
                       <option value="6.7">6.7</option>
                       <option value="6.8">6.8</option>
                       <option value="6.9">6.9</option>
-                      <option value="6.0">7.0</option>
+                      <option value="7.0">7.0</option>
                       <option value="7.1">7.1</option>
                       <option value="7.2">7.2</option>
                       <option value="7.3">7.3</option>
@@ -694,7 +694,7 @@
                       <option value="8.7">8.7</option>
                       <option value="8.8">8.8</option>
                       <option value="8.9">8.9</option>
-                      <option value="9.0">6.0</option>
+                      <option value="9.0">9.0</option>
                       <option value="9.1">9.1</option>
                       <option value="9.2">9.2</option>
                       <option value="9.3">9.3</option>
@@ -709,7 +709,7 @@
                   </td>
                 </tr>
                 <tr id='hw-bestand'>
-                  <td>Bestand</td>
+                  <td>Bestand(PDF)</td>
                   <td>:</td>
                   <td>
                     <input name="uploadedfile" type="file" class='form-control-file'/><br />
@@ -727,7 +727,6 @@
               $sql5 = "SELECT vakhuiswerk.Opdrachtnaam, vakhuiswerkleerling.urlleerling, vakhuiswerkleerling.feedback, vakhuiswerkleerling.urldocent, vakhuiswerkleerling.cijferleerling, vakhuiswerkleerling.cijferdocent
               FROM vakhuiswerkleerling, vakhuiswerk
               WHERE vakhuiswerkleerling.vakhuiswerk_id = vakhuiswerk.vakhuiswerk_id
-              /*AND vakhuiswerkleerling.urldocent <> ''*/
               AND vakhuiswerkleerling.leerling_id = $leerling_id";
               $result5 = $conn->query($sql5);
 
@@ -737,7 +736,7 @@
               }
               else
               {
-                echo "Probeer opnieuw2";
+
               }
               ?>
 
@@ -790,9 +789,7 @@
               <h1>Groepsopdracht uploaden</h1>
               <?php
               $leerling_id = $_SESSION['leerling'];
-              /*$sql90 = "SELECT vakhuiswerk.vakhuiswerk_id, vakhuiswerk.Opdrachtnaam, vakhuiswerk.omschrijving, vakhuiswerk.duedate, vakhuiswerk.url
-              FROM vakhuiswerk
-              WHERE vakhuiswerk.vak_id = $vak_id";*/
+
 
               $sql90 = "SELECT vakhuiswerk.vakhuiswerk_id, vakhuiswerk.Opdrachtnaam, groepinfo.groepnaam, groepinfo.groep_id
               FROM groepinfo, vakhuiswerk
@@ -814,7 +811,8 @@
                       <td>Selecteer opdracht</td>
                       <td>:</td>
                       <td>
-                        <select id='gw-opdracht-select' name="groep_id+vakhuiswerk_id">
+                        <!--zoeken naar opdrachten waar gebruiker leider van is.-->
+                        <select id='gw-opdracht-select' name="groep_id+vakhuiswerk_id" class='form-control'>
                           <option value='0'>Selecteer een opdracht</option>
                           <?php
                           while($row90 = $result90->fetch_assoc())
@@ -824,7 +822,6 @@
                           }
                           ?>
                         </select>
-                        <!--<input type='text' name='opdrachtnaam'>-->
 
                       </td>
                     </tr>
@@ -832,7 +829,7 @@
                       <td>Selecteer inlevermoment</td>
                       <td>:</td>
                       <td>
-                        <input id="gw-inlevermoment-value" style="display:none;" name='inlevermomen' value="1" readonly="readonly"/>
+                        <input id="gw-inlevermoment-value" style="display:none;" name='inlevermoment' value="1" readonly="readonly"/>
                         <div id='gw-inlevermoment-text'>1e inlevermoment</dig>
                           <!--<input type='text' name='opdrachtnaam'>-->
 
@@ -842,7 +839,7 @@
                         <td>Eigen groepscijfer beoordeling</td>
                         <td>:</td>
                         <td>
-                          <select name="beoordeling">
+                          <select name="beoordeling" class='form-control'>
                             <option value="1.0">1.0</option>
                             <option value="1.1">1.1</option>
                             <option value="1.2">1.2</option>
@@ -903,7 +900,7 @@
                             <option value="6.7">6.7</option>
                             <option value="6.8">6.8</option>
                             <option value="6.9">6.9</option>
-                            <option value="6.0">7.0</option>
+                            <option value="7.0">7.0</option>
                             <option value="7.1">7.1</option>
                             <option value="7.2">7.2</option>
                             <option value="7.3">7.3</option>
@@ -923,7 +920,7 @@
                             <option value="8.7">8.7</option>
                             <option value="8.8">8.8</option>
                             <option value="8.9">8.9</option>
-                            <option value="9.0">6.0</option>
+                            <option value="9.0">9.0</option>
                             <option value="9.1">9.1</option>
                             <option value="9.2">9.2</option>
                             <option value="9.3">9.3</option>
@@ -981,7 +978,7 @@
                   }
                   else
                   {
-                    echo "Probeer opnieuw2";
+
                   }
                   ?>
 

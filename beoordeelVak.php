@@ -175,7 +175,7 @@
                           <option value="6.7">6.7</option>
                           <option value="6.8">6.8</option>
                           <option value="6.9">6.9</option>
-                          <option value="6.0">7.0</option>
+                          <option value="7.0">7.0</option>
                           <option value="7.1">7.1</option>
                           <option value="7.2">7.2</option>
                           <option value="7.3">7.3</option>
@@ -195,7 +195,7 @@
                           <option value="8.7">8.7</option>
                           <option value="8.8">8.8</option>
                           <option value="8.9">8.9</option>
-                          <option value="9.0">6.0</option>
+                          <option value="9.0">9.0</option>
                           <option value="9.1">9.1</option>
                           <option value="9.2">9.2</option>
                           <option value="9.3">9.3</option>

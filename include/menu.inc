@@ -184,7 +184,8 @@ if(isset($_POST['submit']))
     // dubbele hash om het kraken van wachtwoord te minimaliseren.
     $password = hash('sha256', $salt.$password);
 
-    $sql = "SELECT leerling_id, firstname, lastname, username FROM leerling WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE() - 1) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >0 LIMIT 1";
+
+    $sql = "SELECT leerling_id, firstname, lastname, username FROM leerling WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE()) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >=0 LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)
@@ -218,7 +219,7 @@ if(isset($_POST['submit']))
     // dubbele hash om het kraken van wachtwoord te minimaliseren.
     $password = hash('sha256', $salt.$password);
 
-    $sql = "SELECT docent_id, firstname, lastname, username FROM docent WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE() - 1) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >0 LIMIT 1";
+    $sql = "SELECT docent_id, firstname, lastname, username FROM docent WHERE username = '$username' AND password = '$password' AND DATEDIFF(einddatum, CURRENT_DATE()) >0 AND DATEDIFF(CURRENT_DATE(), startdatum) >=0 LIMIT 1";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0)

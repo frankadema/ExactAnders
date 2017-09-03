@@ -56,7 +56,7 @@ while($rowCount = $result23->fetch_assoc())
 $length = count($arrayToFill);
 
 if($length === 0){
-  print '{"vakhuiswerk_id":"'.$vakHuiswerkID.'","inlevermoment":"0","duedate":"2018-08-24 00:00:00","pastDueDate":"0","vak_id":"'.$vakID.'","leerling_id":"'.$leerlingID.'","groep_id":"'.$groep_id.'"}';
+  print '{"vakhuiswerk_id":"'.$vakHuiswerkID.'","inlevermoment":"0","vak_id":"'.$vakID.'","leerling_id":"'.$leerlingID.'","groep_id":"'.$groep_id.'"}';
 }else{
   print json_encode($arrayToFill[$length-1]);
 }
