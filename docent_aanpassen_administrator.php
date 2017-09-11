@@ -93,7 +93,7 @@
                 }
               }
 
-              $sql3 = "UPDATE docent SET username = '$username', firstname = '$firstname', lastname = '$lastname', startdatum = '$startdatum', einddatum = '$einddatum' WHERE docent.docent_id = '$docent_id'";
+              $sql3 = "UPDATE docent SET username = '$username', firstname = '$firstname', lastname = '$lastname', email = '$email', startdatum = '$startdatum', einddatum = '$einddatum' WHERE docent.docent_id = '$docent_id'";
 
               if ($conn->query($sql3) === TRUE)
               {

@@ -88,7 +88,7 @@
                 }
               }
 
-              $sql3 = "UPDATE leerling SET username = '$username', firstname = '$firstname', lastname = '$lastname', startdatum = '$startdatum', einddatum = '$einddatum' WHERE leerling.leerling_id = '$leerling_id'";
+              $sql3 = "UPDATE leerling SET username = '$username', firstname = '$firstname', lastname = '$lastname',email = '$email', startdatum = '$startdatum', einddatum = '$einddatum' WHERE leerling.leerling_id = '$leerling_id'";
 
               if ($conn->query($sql3) === TRUE)
               {

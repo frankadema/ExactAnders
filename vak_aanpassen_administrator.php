@@ -114,7 +114,7 @@
             }
             else
             {
-              echo "Probeer opnieuw";
+
             }
             while($row2 = $result2->fetch_assoc())
             {
@@ -149,7 +149,7 @@
                     }
                     else
                     {
-                      echo "Probeer opnieuw";
+
                     }
                     ?>
 
@@ -210,7 +210,7 @@
         }
         else
         {
-          echo "Probeer opnieuw";
+          
         }
 
         echo "<table class='table table-hover'>";

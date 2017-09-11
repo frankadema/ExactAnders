@@ -226,7 +226,7 @@
                 <tr>
                   <td>Feedback</td>
                   <td>:</td>
-                  <td><textarea rows="4" cols="50" class="form-control" name="feedback">Alles is goed alleen een voldoende is het net niet :D
+                  <td><textarea rows="4" cols="50" class="form-control" name="feedback">Feedback
                   </textarea>
                 </td>
               </tr>

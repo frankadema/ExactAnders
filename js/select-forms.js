@@ -9,7 +9,7 @@
 var inlevermomentTitles =
 [
   "1e inlevermoment",
-  "definitive inlevermoment",
+  "Definitief inlevermoment",
 ]
 
 function AssignmentHandler(props)

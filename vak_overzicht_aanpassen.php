@@ -71,7 +71,7 @@
 
         if ($result20->num_rows > 0)
         {
-          echo "done";
+
           $row20 = $result20->fetch_assoc();
           $groep_id = $row20['groep_id'];
 
@@ -87,7 +87,7 @@
 
             if ($conn->query($sql21) === TRUE)
             {
-              echo "Verwerkt";
+              echo "De gegevens zijn verwerkt";
             }
             else
             {
@@ -123,7 +123,7 @@
 
         if ($conn->query($sql5) === TRUE)
         {
-          echo "Verwerkt";
+          echo "De gegevens zijn verwerkt";
         }
         else
         {
@@ -183,11 +183,11 @@
       VALUES ('$vak_id', '$docent_id', '$opdrachtnaam', '$opdrachomschrijving', '$name', '$duedate')";
       if ($conn->query($sql2) === TRUE)
       {
-        echo "New record created successfully";
+        echo "De gegevens zijn verwerkt.";
       }
       else
       {
-        echo "Error: " . $sql2 . "<br>" . $conn->error;
+      //  echo "Error: " . $sql2 . "<br>" . $conn->error;
       }
 
     }
@@ -199,11 +199,11 @@
       $sql = "UPDATE vak SET vakomschrijving = '$vakomschrijving' WHERE vak.vak_id = $vak_id";
       if ($conn->query($sql) === TRUE)
       {
-        echo "New record updated successfully";
+        echo "De gegevens zijn verwerkt.";
       }
       else
       {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+      //  echo "Error: " . $sql . "<br>" . $conn->error;
       }
     }
 

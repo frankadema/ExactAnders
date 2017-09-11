@@ -85,10 +85,7 @@
                 }
               }
 
-
-              //$sql3 = "INSERT INTO tech_ExactAnders.docent (firstname, lastname, email, password, username, startdatum, einddatum)
-              // VALUES ('$firstname','$lastname','$email','$password','$username', '$startdatum', '$einddatum')";
-              $sql3 = "UPDATE administrator SET username = '$username', firstname = '$firstname', lastname = '$lastname' WHERE administrator.administrator_id = '$administrator_id'";
+              $sql3 = "UPDATE administrator SET username = '$username', firstname = '$firstname', lastname = '$lastname',email = '$email' WHERE administrator.administrator_id = '$administrator_id'";
 
               if ($conn->query($sql3) === TRUE)
               {
